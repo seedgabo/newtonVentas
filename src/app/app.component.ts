@@ -1,3 +1,5 @@
+import { LoginPage } from './../pages/login/login';
+import { Api } from './../providers/Api';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -12,18 +14,26 @@ import { ListPage } from '../pages/list/list';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{ title: string, component: any, icon: string }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public api: Api) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
+      { title: 'Home', component: HomePage, icon: 'home' },
+      { title: 'List', component: ListPage, icon: 'list' }
     ];
+    this.api.ready.then((data) => {
+      if (data) {
+        this.rootPage = HomePage;
+      }
+      else {
+        this.rootPage = LoginPage;
+      }
+    })
 
   }
 
@@ -40,5 +50,14 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  logout() {
+    this.api.storage.clear();
+    this.rootPage = LoginPage;
+    this.api.user = null;
+    this.api.username = null;
+    this.api.password = null;
+
   }
 }

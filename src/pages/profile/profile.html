@@ -1,0 +1,52 @@
+<ion-header>
+
+    <ion-navbar color="primary">
+        <ion-title>Profile</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-card>
+        <ion-grid>
+            <ion-row>
+                <ion-col width-25="">
+                    <img [src]="api.user.imagen" alt="">
+                </ion-col>
+                <ion-col>
+                    <p>
+                        <b>Nombre: </b> <span> {{api.user.nombre}}</span>
+                    </p>
+                    <p>
+                        <b>Email: </b> <span> {{api.user.email}}</span>
+                    </p>
+                    <p>
+                        {{api.user.cliente.full_name}}
+                    </p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-card>
+    <ion-card>
+        <ion-card-title>
+            <h2 text-center ion-text color="primary">Cambiar Contraseña</h2>
+        </ion-card-title>
+        <ion-item>
+            <ion-label stacked> Contraseña Antigua</ion-label>
+            <ion-input type="password" [(ngModel)]="oldpassword" ></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked> Contraseña Nueva</ion-label>
+            <ion-input type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked> Confirmar Contraseña</ion-label>
+            <ion-input type="password" [(ngModel)]="password_confirm"></ion-input>
+        </ion-item>
+    </ion-card>
+</ion-content>
+
+<ion-footer>
+    <button ion-button full color="secondary" (click)="changePassword()" [disabled]="password_confirm != password  ||  password == '' " ><ion-icon name="save"></ion-icon>  Guardar</button>
+</ion-footer>

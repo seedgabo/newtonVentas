@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>Clientes</ion-title>
+    <ion-buttons end>
+      <button ion-button clear icon-only (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-searchbar (ionInput)="search()" [(ngModel)]="query"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content no-padding>
+  <ion-list>
+    <button ion-item (click)="select(cliente)" *ngFor="let cliente of clientes.data">
+      <ion-thumbnail item-left *ngIf="cliente.image">
+        <img [src]="cliente.image.url">
+      </ion-thumbnail>
+      <h2 text-wrap>{{cliente.nombre}}</h2>
+      <h3 text-wrap [innerHTML]="cliente.nit"></h3>
+    </button>
+  </ion-list>
+</ion-content>
