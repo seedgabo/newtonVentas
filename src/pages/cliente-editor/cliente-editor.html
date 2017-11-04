@@ -1,0 +1,75 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Cliente</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Nombres</ion-label>
+      <ion-input type="text" [(ngModel)]="cliente.nombres"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Apellidos</ion-label>
+      <ion-input type="text" [(ngModel)]="cliente.apellidos"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Nit/Cedula</ion-label>
+      <ion-input type="text" [(ngModel)]="cliente.nit"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Sexo</ion-label>
+      <ion-select [(ngModel)]="cliente.sexo">
+        <ion-option value="M">Masculino</ion-option>
+        <ion-option value="F">Femenino</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <div class="text-right">
+    <button ion-button (click)="more=!more" *ngIf="!more" icon-left clear>
+      <ion-icon name="add-circle"></ion-icon>
+      Mas
+    </button>
+  </div>
+  <ion-list *ngIf="more">
+    <ion-item>
+      <ion-label floating> Email</ion-label>
+      <ion-input type="email" [(ngModel)]="cliente.email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Codigo</ion-label>
+      <ion-input type="codigo" [(ngModel)]="cliente.codigo"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating> Dirección</ion-label>
+      <ion-textarea type="direccion" [(ngModel)]="cliente.direccion"></ion-textarea>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <button ion-button full color="secondary" [disabled]="!canSave()" (click)="save()">
+            Guardar
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button full color="light" (click)="dismiss()">
+            Cancelar
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

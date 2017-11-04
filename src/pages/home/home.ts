@@ -19,9 +19,11 @@ export class HomePage {
     var modal = this.modal.create(ProductSearchPage, );
     modal.present()
     modal.onDidDismiss((data) => {
-      console.log(data);
-      data.quantity = 1;
-      this.items[this.items.length] = data;
+      if (data) {
+        console.log(data);
+        data.quantity = 1;
+        this.items[this.items.length] = data;
+      }
     })
   }
 
@@ -58,6 +60,8 @@ export class HomePage {
       user_id: this.api.user.id,
       cliente_id: this.cliente.id,
       items: [],
+      estado: 'Pagado',
+      vendedor_id: this.api.user.id,
     }
     this.items.forEach((item) => {
       data.items.push({

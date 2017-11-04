@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, AlertController } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
 // import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/map';
@@ -7,33 +7,16 @@ import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class Api {
-  productos: any = [];
   username: string;
   password: string;
   token: string;
-  // url: string = 'http://seguimiento.duflosa.com:8080/pedidos/public/';
   url: string = 'http://localhost/newton/public/';
   user: any = null;
-  pushData: any;
-  carrito = [];
-  vista = 'grid';
-  tipo = "";
-  categorias = [44, 27, 46, 47, 48, 49, 26, 45, 50, 51, 52, 53];
-  index = 0;
-  entidad_ids = [3, 4, 18, 20, 22, 23, 35];
-  restricted_categorias = [26, 45, 50, 61];
-  user_selected: any = undefined;
-  cupon: any = undefined;
-  pedidos_ayer = {
-    almuerzo: null,
-    comida: null,
-    cena: null
-  };
   ready = new Promise((resolve, reject) => {
     this.resolve = resolve;
   })
   resolve;
-  constructor(public http: Http, private platform: Platform, public storage: Storage) {
+  constructor(public http: Http, private platform: Platform, public storage: Storage, public alert: AlertController) {
     this.initVar();
   }
 
@@ -69,15 +52,6 @@ export class Api {
     });
   }
 
-  setProgramacion(programa) {
-    if (programa != undefined) {
-      if (programa.categorias != '')
-        this.categorias = programa.categorias;
-      if (programa.productos != '')
-        this.productos = programa.productos;
-    }
-  }
-
   get(uri) {
     return new Promise((resolve, reject) => {
       this.http.get(this.url + "api/" + uri, { headers: this.setHeaders() })
@@ -101,6 +75,17 @@ export class Api {
         });
     });
   }
+  put(uri, data) {
+    return new Promise((resolve, reject) => {
+      this.http.put(this.url + "api/" + uri, data, { headers: this.setHeaders() })
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, error => {
+          return reject(this.handleData(error));
+        });
+    });
+  }
 
   delete(uri) {
     return new Promise((resolve, reject) => {
@@ -112,39 +97,6 @@ export class Api {
           return reject(this.handleData(error));
         });
     });
-  }
-
-  addToCart(producto) {
-    var index = this.carrito.findIndex((item) => {
-      return item.id == producto.id;
-    });
-    if (index == -1) {
-      this.carrito.push(producto);
-    } else {
-      this.carrito[index].cantidad_pedidos = producto.cantidad_pedidos;
-    }
-    this.storage.set("carrito", JSON.stringify(this.carrito));
-  }
-
-  removeFromCart(producto) {
-    var index = this.carrito.findIndex((item) => {
-      return item.id == producto.id;
-    });
-    if (index == -1) {
-      return false;
-    } else {
-      this.carrito.splice(index);
-      this.storage.set("carrito", JSON.stringify(this.carrito));
-      return true;
-    }
-  }
-
-  clearCarrito() {
-    return new Promise((resolve, reject) => {
-      this.carrito = [];
-      this.storage.set("carrito", JSON.stringify(this.carrito));
-      resolve(true);
-    })
   }
 
 
@@ -227,18 +179,26 @@ export class Api {
     return headers;
   }
 
-  private handleData(res) {
-    if (res.statusText == "Ok") {
-      return { status: "No Parace haber conexión con el servidor" };
+  handleData(error) {
+    console.error(error)
+    var message = "";
+    if (error.error == 500 || error.errorStatus == 500) {
+      message = "Internal Server Error";
     }
+    if (error.error == 404 || error.errorStatus == 404) {
+      message = "Not Found"
+    }
+    if (error.error == 401 || error.errorStatus == 401) {
+      message = "Unathorized"
+    }
+    this.alert.create({
+      title: "Network Error",
+      subTitle: error.error,
+      message: message,
+      buttons: ["OK"],
 
-    // If request fails, throw an Error that will be caught
-    if (res.status < 200 || res.status >= 300) {
-      return { error: res.status }
-    }
-    // If everything went fine, return the response
-    else {
-      return res;
-    }
+    }).present();
+
+    return error;
   }
 }

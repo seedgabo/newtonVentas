@@ -14,11 +14,18 @@
 <ion-content no-padding>
   <ion-list>
     <button ion-item (click)="select(cliente)" *ngFor="let cliente of clientes.data">
-      <ion-thumbnail item-left *ngIf="cliente.image">
-        <img [src]="cliente.image.url">
+      <ion-thumbnail item-left xngIf="cliente.image">
+        <img [src]="cliente.foto_url">
       </ion-thumbnail>
-      <h2 text-wrap>{{cliente.nombre}}</h2>
+      <h2 text-wrap>{{cliente.nombres}}
+        <span *ngIf="cliente.apellidos">{{cliente.apellidos}}</span>
+      </h2>
       <h3 text-wrap [innerHTML]="cliente.nit"></h3>
     </button>
   </ion-list>
+  <ion-fab bottom right>
+    <button ion-fab (click)="addCliente()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

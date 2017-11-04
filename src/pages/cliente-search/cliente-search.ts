@@ -1,6 +1,6 @@
 import { Api } from './../../providers/Api';
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 @Component({
   selector: 'page-cliente-search',
   templateUrl: 'cliente-search.html',
@@ -8,7 +8,7 @@ import { NavController, NavParams, ViewController } from 'ionic-angular';
 export class ClienteSearchPage {
   query = ""
   clientes = { data: [] };
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewctrl: ViewController, public api: Api) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewctrl: ViewController, public api: Api, public modal: ModalController) {
     this.api.storage.get('recent_clientes')
       .then((recent_clientes) => {
         if (recent_clientes) {
@@ -32,5 +32,15 @@ export class ClienteSearchPage {
   }
   select(cliente) {
     this.viewctrl.dismiss(cliente, "accept");
+  }
+
+  addCliente() {
+    var modal = this.modal.create("ClienteEditorPage", {}, { cssClass: "modal-large" })
+    modal.present();
+    modal.onDidDismiss((data) => {
+      if (data) {
+        this.clientes.data = [data].concat(this.clientes.data);
+      }
+    })
   }
 }
