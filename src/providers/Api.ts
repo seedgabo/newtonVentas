@@ -10,7 +10,8 @@ export class Api {
   username: string;
   password: string;
   token: string;
-  url: string = 'http://localhost/newton/public/';
+  // url: string = 'http://localhost/newton/public/';
+  url: string = 'http://newton.eycproveedores.com/newton/public/';
   user: any = null;
   ready = new Promise((resolve, reject) => {
     this.resolve = resolve;

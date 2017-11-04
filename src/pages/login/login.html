@@ -1,10 +1,10 @@
 <ion-content class="auth">
   <div text-center class="padding" *ngIf="!register">
-    <img src="{{api.url + 'img/logo.png'}}" alt="logo" class="logo">
+    <img [src]="api.url + 'img/logo.png'" alt="logo" class="logo">
   </div>
   <br>
   <h1 text-center color="primary"> Iniciar Sesión</h1>
-  <div padding class="login-form">
+  <div padding class="login-form" [style]="'background-image:url('+ api.url + +'img/fondo (1).jpg)'">
     <!-- <form> -->
     <div class="login" *ngIf="!register">
 
