@@ -1,3 +1,4 @@
+import { PrintInvoicePage } from './../print-invoice/print-invoice';
 import { Api } from './../../providers/Api';
 import { ClienteSearchPage } from './../cliente-search/cliente-search';
 import { ProductSearchPage } from './../product-search/product-search';
@@ -15,6 +16,15 @@ export class HomePage {
   constructor(public navCtrl: NavController, public modal: ModalController, public api: Api, public loading: LoadingController, public alert: AlertController, public toast: ToastController) {
 
   }
+  ionViewDidLoad() {
+    this.api.get('getParameters')
+      .then((resp) => {
+        this.api.settings = resp;
+        this.api.storage.set('settings', resp);
+      })
+      .catch(console.error)
+  }
+
   selectProduct() {
     var modal = this.modal.create(ProductSearchPage, );
     modal.present()
@@ -88,6 +98,7 @@ export class HomePage {
 
     this.api.post("pedidos", data)
       .then((data) => {
+        this.toPrint(data);
         loading.dismiss().then(() => {
           this.items = [];
           this.cliente = null;
@@ -99,6 +110,15 @@ export class HomePage {
           this.alert.create({ title: "Error", message: JSON.stringify(err), buttons: ["Ok"] }).present();
         });
       });
+  }
+
+  toPrint(data) {
+    this.api.get('invoices/' + data.invoice_id + "&with[]=cliente&with[]=items")
+      .then((resp: any) => {
+        console.log("invoice:", resp);
+        resp.items = JSON.parse(resp.items);
+        this.navCtrl.push("PrintInvoicePage", { invoice: resp });
+      })
   }
 
   canProccess() {

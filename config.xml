@@ -16,11 +16,6 @@
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="FadeSplashScreenDuration" value="300" />
-
-    <!--
-      Change these to configure how the splashscreen displays and fades in/out.
-      More info here: https://github.com/apache/cordova-plugin-splashscreen
-    -->
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
@@ -86,4 +81,12 @@
     <plugin name="cordova-plugin-device" spec="1.1.4" />
     <plugin name="cordova-plugin-splashscreen" spec="~4.0.1" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.11" />
+    <plugin name="de.appplant.cordova.plugin.printer" spec="^0.7.3" />
+    <plugin name="cordova-plugin-code-push" spec="^1.9.8-beta" />
+    <platform name="android">
+         <preference name="CodePushDeploymentKey" value="xAZY5v6E1jrMNnutXmz6BhfA6-t7c0e4a0a6-2be5-4604-bcc1-c0b2c1387dd2Y" />
+    </platform>
+    <platform name="ios">
+        <preference name="CodePushDeploymentKey" value="LMZezZNr6aueejN67aCb1N2JWACVc0e4a0a6-2be5-4604-bcc1-c0b2c1387dd2" />
+    </platform>
 </widget>

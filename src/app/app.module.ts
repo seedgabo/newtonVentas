@@ -14,7 +14,8 @@ import { ListPage } from '../pages/list/list';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpModule } from '@angular/http';
-
+import { Printer } from '@ionic-native/printer';
+import { CodePush } from "@ionic-native/code-push";
 @NgModule({
   declarations: [
     MyApp,
@@ -41,7 +42,7 @@ import { HttpModule } from '@angular/http';
   ],
   providers: [
     StatusBar,
-    SplashScreen,
+    SplashScreen, Printer, CodePush,
     Api,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]

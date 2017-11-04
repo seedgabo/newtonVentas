@@ -15,6 +15,7 @@ export class Api {
   ready = new Promise((resolve, reject) => {
     this.resolve = resolve;
   })
+  settings: any = {};
   resolve;
   constructor(public http: Http, private platform: Platform, public storage: Storage, public alert: AlertController) {
     this.initVar();
@@ -23,6 +24,7 @@ export class Api {
   initVar() {
     this.storage.get("username").then((data) => data != undefined ? this.username = data : '');
     this.storage.get("password").then((data) => data != undefined ? this.password = data : '');
+    this.storage.get("settings").then((data) => data != undefined ? this.settings = data : '');
     this.storage.get("user").then((data) => {
       data != undefined ? this.user = JSON.parse(data) : null;
       this.resolve(this.user);
