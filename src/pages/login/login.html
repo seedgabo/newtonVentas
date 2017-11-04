@@ -1,10 +1,10 @@
-<ion-content class="auth">
+<ion-content class="auth" [style.background-image]="backimg">
   <div text-center class="padding" *ngIf="!register">
     <img [src]="api.url + 'img/logo.png'" alt="logo" class="logo">
   </div>
   <br>
   <h1 text-center color="primary"> Iniciar Sesión</h1>
-  <div padding class="login-form" [style]="'background-image:url('+ api.url + +'img/fondo (1).jpg)'">
+  <div padding class="login-form">
     <!-- <form> -->
     <div class="login" *ngIf="!register">
 
@@ -62,6 +62,4 @@
     <!-- <button ion-button color="secondary" full (click)="registrarse()">{{ register ? 'Ya Registrado?' : 'Registrarse' }}</button> -->
 
   </div>
-
-
 </ion-content>

@@ -3,7 +3,7 @@
     <name>Newton Ventas</name>
     <description>Newton Punto de Venta</description>
     <author email="seedgabo@gmail.com" href="http://residenciasonline.com/">Eyc proveedores</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.1.109:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -82,6 +82,7 @@
     <platform name="ios">
         <preference name="CodePushDeploymentKey" value="LMZezZNr6aueejN67aCb1N2JWACVc0e4a0a6-2be5-4604-bcc1-c0b2c1387dd2" />
     </platform>
+    <allow-navigation href="http://192.168.1.109:8100" />
     <engine name="android" spec="~6.3.0" />
     <plugin name="de.appplant.cordova.plugin.printer" spec="^0.7.3" />
     <plugin name="cordova-plugin-code-push" spec="^1.9.8-beta" />

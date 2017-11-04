@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { Api } from '../../providers/Api';
 import { HomePage } from "../home/home";
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
@@ -19,10 +20,15 @@ export class LoginPage {
     cliente_id: 1,
   }
   terms = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public alert: AlertController, public loading: LoadingController) { }
+  backimg;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public alert: AlertController, public loading: LoadingController, private sanitizer: DomSanitizer) {
+  }
 
   ionViewDidLoad() {
-
+    this.api.ready.then(() => {
+      this.backimg = this.sanitizer.bypassSecurityTrustStyle("url('" + this.api.url + "img/fondo (1).jpg')");
+      console.log(this.backimg);
+    })
   }
 
   doLogin() {
