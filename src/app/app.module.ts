@@ -1,3 +1,4 @@
+import { ProfilePage } from './../pages/profile/profile';
 import { ClienteSearchPage } from './../pages/cliente-search/cliente-search';
 import { ProductSearchPage } from './../pages/product-search/product-search';
 import { IonicStorageModule } from '@ionic/storage';
@@ -22,6 +23,7 @@ import { CodePush } from "@ionic-native/code-push";
     LoginPage,
     HomePage,
     ListPage,
+    ProfilePage,
     ProductSearchPage,
     ClienteSearchPage,
   ],
@@ -37,6 +39,7 @@ import { CodePush } from "@ionic-native/code-push";
     LoginPage,
     HomePage,
     ListPage,
+    ProfilePage,
     ProductSearchPage,
     ClienteSearchPage,
   ],

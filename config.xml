@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>MyApp</name>
-    <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+<widget id="com.seedgabonewtonVentas" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Newton Ventas</name>
+    <description>Newton Punto de Venta</description>
+    <author email="seedgabo@gmail.com" href="http://residenciasonline.com/">Eyc proveedores</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -76,17 +76,18 @@
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
-    <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
-    <plugin name="cordova-plugin-whitelist" spec="1.3.1" />
-    <plugin name="cordova-plugin-device" spec="1.1.4" />
-    <plugin name="cordova-plugin-splashscreen" spec="~4.0.1" />
-    <plugin name="cordova-plugin-ionic-webview" spec="^1.1.11" />
-    <plugin name="de.appplant.cordova.plugin.printer" spec="^0.7.3" />
-    <plugin name="cordova-plugin-code-push" spec="^1.9.8-beta" />
     <platform name="android">
-         <preference name="CodePushDeploymentKey" value="xAZY5v6E1jrMNnutXmz6BhfA6-t7c0e4a0a6-2be5-4604-bcc1-c0b2c1387dd2Y" />
+        <preference name="CodePushDeploymentKey" value="xAZY5v6E1jrMNnutXmz6BhfA6-t7c0e4a0a6-2be5-4604-bcc1-c0b2c1387dd2Y" />
     </platform>
     <platform name="ios">
         <preference name="CodePushDeploymentKey" value="LMZezZNr6aueejN67aCb1N2JWACVc0e4a0a6-2be5-4604-bcc1-c0b2c1387dd2" />
     </platform>
+    <engine name="android" spec="~6.3.0" />
+    <plugin name="de.appplant.cordova.plugin.printer" spec="^0.7.3" />
+    <plugin name="cordova-plugin-code-push" spec="^1.9.8-beta" />
+    <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.1" />
+    <plugin name="cordova-plugin-device" spec="1.1.4" />
+    <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
+    <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
 </widget>
