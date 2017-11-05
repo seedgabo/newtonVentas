@@ -3,7 +3,7 @@
     <name>Newton Ventas</name>
     <description>Newton Punto de Venta</description>
     <author email="seedgabo@gmail.com" href="http://residenciasonline.com/">Eyc proveedores</author>
-    <content original-src="index.html" src="http://192.168.1.109:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
