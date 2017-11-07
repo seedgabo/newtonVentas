@@ -84,6 +84,7 @@
     </platform>
     <allow-navigation href="http://192.168.1.109:8100" />
     <engine name="android" spec="~6.3.0" />
+    <engine name="browser" spec="~5.0.1" />
     <plugin name="de.appplant.cordova.plugin.printer" spec="^0.7.3" />
     <plugin name="cordova-plugin-code-push" spec="^1.9.8-beta" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
