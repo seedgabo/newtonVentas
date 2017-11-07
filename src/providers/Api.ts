@@ -18,6 +18,7 @@ export class Api {
   })
   settings: any = {};
   resolve;
+  invoices = [];
   constructor(public http: Http, private platform: Platform, public storage: Storage, public alert: AlertController) {
     this.initVar();
   }
@@ -30,7 +31,8 @@ export class Api {
       data != undefined ? this.user = JSON.parse(data) : null;
       this.resolve(this.user);
     });
-    // this.storage.get("carrito").then( (data)      =>  data!=undefined ? this.carrito = JSON.parse(data): [] );
+
+    this.storage.get("invoices").then((data) => data != undefined ? this.invoices = data : []);
   }
 
   saveData() {

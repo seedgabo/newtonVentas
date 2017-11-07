@@ -3,21 +3,34 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>List</ion-title>
+    <ion-title>Facturas</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
-      </div>
+<ion-content id="toPrint">
+  <ion-list [virtualScroll]="api.invoices">
+    <button ion-item *virtualItem="let invoice" (click)="invoice" text-wrap>
+      <h3 *ngIf="invoice.cliente">
+        {{invoice.cliente.nombres}}
+      </h3>
+      <span item-right>
+        {{ invoice.total | currency:'USD':true:'4.2-2' }}
+      </span>
     </button>
   </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <b>Total:</b>
+          <span>{{ total | currency:'USD':true:'4.2-2' }}</span>
+        </ion-col>
+        <ion-col class="no-print">
+          <button ion-button full color="secondary" (click)="print()">Cierre</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

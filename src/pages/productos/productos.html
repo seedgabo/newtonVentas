@@ -1,0 +1,27 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Productos</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <div text-center>
+    <ion-spinner color="primary" *ngIf="loading"></ion-spinner>
+  </div>
+  <ion-searchbar [(ngModel)]="query" (ionInput)="filter()">
+  </ion-searchbar>
+  <ion-list>
+    <button ion-item *ngFor="let producto of productos">
+      {{ producto.name }}
+    </button>
+  </ion-list>
+  <ion-fab bottom right>
+    <button ion-fab>
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
+</ion-content>

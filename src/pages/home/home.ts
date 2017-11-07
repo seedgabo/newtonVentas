@@ -97,8 +97,9 @@ export class HomePage {
     loading.present();
 
     this.api.post("pedidos", data)
-      .then((data) => {
-        this.toPrint(data);
+      .then((resp) => {
+        this.saveData(resp, this.cliente);
+        this.toPrint(resp);
         loading.dismiss().then(() => {
           this.items = [];
           this.cliente = null;
@@ -123,6 +124,12 @@ export class HomePage {
 
   canProccess() {
     return this.cliente && this.items.length > 0;
+  }
+
+  saveData(invoice, cliente) {
+    invoice.cliente = cliente;
+    this.api.invoices.push(invoice);
+    this.api.storage.set('invoices', this.api.invoices);
   }
 
 }
