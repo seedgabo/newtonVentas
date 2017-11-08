@@ -12,7 +12,7 @@ import { NavController, ModalController, LoadingController, AlertController, Toa
 export class HomePage {
   items = [];
   cliente = null;
-
+  loading = false;
   constructor(public navCtrl: NavController, public modal: ModalController, public api: Api, public loading: LoadingController, public alert: AlertController, public toast: ToastController) {
 
   }
@@ -23,6 +23,20 @@ export class HomePage {
         this.api.storage.set('settings', resp);
       })
       .catch(console.error)
+    this.loadItems();
+  }
+  loadItems() {
+    this.loading = true;
+    this.api.get('productos?where[entidad_id]=' + this.api.user.entidad_id)
+      .then((data: any) => {
+        console.log(data)
+        this.api.productos = data;
+        this.loading = false;
+      })
+      .catch((err) => {
+        console.error(err)
+        this.loading = false;
+      })
   }
 
   selectProduct() {
@@ -49,10 +63,12 @@ export class HomePage {
   addOne(item) {
     item.quantity++;
   }
+
   removeOne(item) {
     if (item.quantity > 1)
       item.quantity--;
   }
+
   removeItem(index) {
     this.items.splice(index, 1);
   }

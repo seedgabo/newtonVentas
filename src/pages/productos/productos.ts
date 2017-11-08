@@ -39,7 +39,8 @@ export class ProductosPage {
     }
     var filter = this.query.toLowerCase()
     this.productos = this.api.productos.filter((prod) => {
-      return prod.name.toLowerCase().indexOf(this) > -1;
+      return prod.name.toLowerCase().indexOf(filter) > -1 ||
+        (prod.description && prod.description.toLowerCase().indexOf(filter) > -1);
     })
   }
 
@@ -59,7 +60,7 @@ export class ProductosPage {
           this.delete(producto, index)
         }
       }]
-    })
+    }).present()
   }
 
   edit(producto) {

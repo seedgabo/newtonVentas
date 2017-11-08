@@ -39,7 +39,7 @@
 </ion-content>
 
 <ion-footer>
-  <button ion-button [disabled]="!canSave()" full color="secondary" (click)="save()">
+  <button ion-button [disabled]="!canSave() || loading " full color="secondary" (click)="save()">
     Guardar
   </button>
 </ion-footer>

@@ -23,8 +23,8 @@ export class ProductoPage {
   };
   loading = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public viewctrl: ViewController) {
-    if (navParams.get('productos')) {
-      this.producto = navParams.get('productos');
+    if (navParams.get('producto')) {
+      this.producto = navParams.get('producto');
     }
   }
 
