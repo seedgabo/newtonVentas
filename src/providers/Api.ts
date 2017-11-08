@@ -11,7 +11,7 @@ export class Api {
   password: string;
   token: string;
   // url: string = 'http://localhost/newton/public/';
-  url: string = 'http://newton.eycproveedores.com/eyc/public/';
+  url: string = 'http://newton.eycproveedores.com/newtonPenon/public/';
   user: any = null;
   ready = new Promise((resolve, reject) => {
     this.resolve = resolve;
@@ -19,6 +19,7 @@ export class Api {
   settings: any = {};
   resolve;
   invoices = [];
+  productos = [];
   constructor(public http: Http, private platform: Platform, public storage: Storage, public alert: AlertController) {
     this.initVar();
   }

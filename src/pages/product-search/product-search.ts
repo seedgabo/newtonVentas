@@ -20,7 +20,7 @@ export class ProductSearchPage {
   ionViewDidLoad() {
   }
   search() {
-    this.api.get(`productos?whereLike[name]=${this.query}&paginate=50&with[]=image`)
+    this.api.get(`productos?where[entidad_id]=${this.api.user.entidad_id}&whereLike[name]=${this.query}&paginate=50&with[]=image`)
       .then((data: any) => {
         this.products = data;
         this.api.storage.set('recent_products', data);

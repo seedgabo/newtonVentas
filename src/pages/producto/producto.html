@@ -1,0 +1,45 @@
+<ion-header>
+
+  <ion-navbar color="secondary">
+    <ion-title>Producto</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+
+    <ion-item>
+      <ion-label floating>Nombre</ion-label>
+      <ion-input [(ngModel)]="producto.name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Referencia</ion-label>
+      <ion-input [(ngModel)]="producto.referencia"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Precio</ion-label>
+      <ion-input type="number" [(ngModel)]="producto.precio"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Descripción</ion-label>
+      <ion-textarea [(ngModel)]="producto.description"></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <button ion-button [disabled]="!canSave()" full color="secondary" (click)="save()">
+    Guardar
+  </button>
+</ion-footer>

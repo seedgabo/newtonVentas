@@ -1,6 +1,9 @@
 <ion-header>
 
   <ion-navbar color="primary">
+    <button ion-button menuToggle icon-only>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Productos</ion-title>
   </ion-navbar>
 
@@ -14,12 +17,16 @@
   <ion-searchbar [(ngModel)]="query" (ionInput)="filter()">
   </ion-searchbar>
   <ion-list>
-    <button ion-item *ngFor="let producto of productos">
-      {{ producto.name }}
+    <button ion-item *ngFor="let producto of productos; let i=index" (click)="actions(producto,i)">
+      <ion-thumbnail item-left>
+        <img [src]="producto.image_url" alt="">
+      </ion-thumbnail>
+      <h2>{{ producto.name }}</h2>
+      <h3>{{producto.precio | currency:'USD':true:'4.2-2' }}</h3>
     </button>
   </ion-list>
   <ion-fab bottom right>
-    <button ion-fab>
+    <button ion-fab (click)="add()">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
