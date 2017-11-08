@@ -77,7 +77,7 @@
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
     <platform name="android">
-        <preference name="CodePushDeploymentKey" value="xAZY5v6E1jrMNnutXmz6BhfA6-t7c0e4a0a6-2be5-4604-bcc1-c0b2c1387dd2Y" />
+        <preference name="CodePushDeploymentKey" value="xAZY5v6E1jrMNnutXmz6BhfA6-t7c0e4a0a6-2be5-4604-bcc1-c0b2c1387dd2" />
     </platform>
     <platform name="ios">
         <preference name="CodePushDeploymentKey" value="LMZezZNr6aueejN67aCb1N2JWACVc0e4a0a6-2be5-4604-bcc1-c0b2c1387dd2" />
