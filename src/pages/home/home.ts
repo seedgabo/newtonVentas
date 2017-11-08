@@ -13,7 +13,7 @@ export class HomePage {
   items = [];
   cliente = null;
   loading = false;
-  constructor(public navCtrl: NavController, public modal: ModalController, public api: Api, public loading: LoadingController, public alert: AlertController, public toast: ToastController) {
+  constructor(public navCtrl: NavController, public modal: ModalController, public api: Api, public loadingctrl: LoadingController, public alert: AlertController, public toast: ToastController) {
 
   }
   ionViewDidLoad() {
@@ -102,7 +102,7 @@ export class HomePage {
       })
     })
 
-    var loading = this.loading.create({
+    var loading = this.loadingctrl.create({
       content: `
             <div class="loader">
                 <img src="${this.api.url + "img/logo.png"}"/>
