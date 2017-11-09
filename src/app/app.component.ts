@@ -1,13 +1,13 @@
 import { CodePush } from '@ionic-native/code-push';
-import { LoginPage } from './../pages/login/login';
 import { Api } from './../providers/Api';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+// import { HomePage } from '../pages/home/home';
+// import { ListPage } from '../pages/list/list';
+// import { LoginPage } from './../pages/login/login';
 
 @Component({
   templateUrl: 'app.html'
@@ -24,16 +24,16 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage, icon: 'home' },
-      { title: 'Facturas', component: ListPage, icon: 'list' },
+      { title: 'Home', component: 'HomePage', icon: 'home' },
+      { title: 'Facturas', component: 'ListPage', icon: 'list' },
       { title: 'Productos', component: 'ProductosPage', icon: 'cart' }
     ];
     this.api.ready.then((data) => {
       if (data) {
-        this.rootPage = HomePage;
+        this.rootPage = 'HomePage';
       }
       else {
-        this.rootPage = LoginPage;
+        this.rootPage = 'LoginPage';
       }
     })
 
@@ -61,7 +61,7 @@ export class MyApp {
 
   logout() {
     this.api.storage.clear();
-    this.rootPage = LoginPage;
+    this.rootPage = 'LoginPage';
     this.api.user = null;
     this.api.username = null;
     this.api.password = null;

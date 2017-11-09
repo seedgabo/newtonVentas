@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController, IonicPage } from 'ionic-angular';
 import { Api } from '../../providers/Api';
-import { HomePage } from "../home/home";
+// import { HomePage } from "../home/home";
 import { DomSanitizer } from '@angular/platform-browser';
+@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
@@ -39,7 +40,7 @@ export class LoginPage {
       this.api.saveUser(response);
       this.api.saveData()
       this.api.user = response;
-      this.navCtrl.setRoot(HomePage);
+      this.navCtrl.setRoot('HomePage');
 
     })
       .catch(() => {
@@ -68,7 +69,7 @@ export class LoginPage {
         this.api.user = data;
         this.api.saveUser(data);
         this.api.saveData()
-        this.navCtrl.setRoot(HomePage);
+        this.navCtrl.setRoot('HomePage');
       }).catch((err) => {
         loading.dismiss();
         console.error(err);

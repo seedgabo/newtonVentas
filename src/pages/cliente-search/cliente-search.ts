@@ -1,6 +1,6 @@
 import { Api } from './../../providers/Api';
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
+import { NavController, NavParams, ViewController, ModalController, ActionSheetController } from 'ionic-angular';
 @Component({
   selector: 'page-cliente-search',
   templateUrl: 'cliente-search.html',
@@ -8,7 +8,7 @@ import { NavController, NavParams, ViewController, ModalController } from 'ionic
 export class ClienteSearchPage {
   query = ""
   clientes = { data: [] };
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewctrl: ViewController, public api: Api, public modal: ModalController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewctrl: ViewController, public api: Api, public modal: ModalController, public actionsheet: ActionSheetController) {
     this.api.storage.get('recent_clientes')
       .then((recent_clientes) => {
         if (recent_clientes) {
@@ -34,12 +34,36 @@ export class ClienteSearchPage {
     this.viewctrl.dismiss(cliente, "accept");
   }
 
+  actions(cliente) {
+    this.actionsheet.create({
+      title: 'Acciones',
+      buttons: [{
+        text: "Editar",
+        icon: 'create',
+        handler: () => {
+          this.editCliente(cliente);
+        }
+      }]
+    })
+  }
+
   addCliente() {
     var modal = this.modal.create("ClienteEditorPage", {}, { cssClass: "modal-large" })
     modal.present();
     modal.onDidDismiss((data) => {
       if (data) {
         this.clientes.data = [data].concat(this.clientes.data);
+        this.api.storage.set('recent_clientes', this.clientes);
+      }
+    })
+  }
+  editCliente(cliente) {
+    var modal = this.modal.create("ClienteEditorPage", { cliente: cliente }, { cssClass: "modal-large" })
+    modal.present();
+    modal.onDidDismiss((data) => {
+      if (data) {
+        cliente = data;
+        this.api.storage.set('recent_clientes', this.clientes);
       }
     })
   }

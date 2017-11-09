@@ -13,15 +13,24 @@
 </ion-header>
 <ion-content no-padding>
   <ion-list>
-    <button ion-item (click)="select(cliente)" *ngFor="let cliente of clientes.data">
-      <ion-thumbnail item-left xngIf="cliente.image">
-        <img [src]="cliente.foto_url">
-      </ion-thumbnail>
-      <h2 text-wrap>{{cliente.nombres}}
-        <span *ngIf="cliente.apellidos">{{cliente.apellidos}}</span>
-      </h2>
-      <h3 text-wrap [innerHTML]="cliente.nit"></h3>
-    </button>
+    <ion-item-sliding *ngFor="let cliente of clientes.data">
+      <button ion-item (click)="select(cliente)" (press)="actions(cliente)">
+        <ion-thumbnail item-left xngIf="cliente.image">
+          <img [src]="cliente.foto_url">
+        </ion-thumbnail>
+        <h2 text-wrap>
+          {{cliente.nombres}}
+          <span *ngIf="cliente.apellidos">{{cliente.apellidos}}</span>
+        </h2>
+        <h3 text-wrap [innerHTML]="cliente.nit"></h3>
+      </button>
+      <ion-item-options side="right">
+        <button ion-button color="primary" (click)="editCliente(cliente)">
+          <ion-icon name="create"></ion-icon>
+          Editar
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
   <ion-fab bottom right>
     <button ion-fab (click)="addCliente()">

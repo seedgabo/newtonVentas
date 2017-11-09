@@ -32,13 +32,27 @@ export class ProductoPage {
   }
 
   save() {
+    var data = {
+      "referencia": this.producto.referencia,
+      "name": this.producto.name,
+      "description": this.producto.name,
+      "precio": this.producto.precio,
+      "destacado": this.producto.destacado,
+      "active": this.producto.active,
+      "impuesto": this.producto.impuesto,
+      "discount": this.producto.discount,
+      "es_vendible_sin_stock": this.producto.es_vendible_sin_stock,
+      "mostrar_stock": this.producto.mostrar_precio,
+      "mostrar_precio": this.producto.mostrar_precio,
+      "entidad_id": this.api.user.entidad_id,
+    }
     this.loading = true;
     var promise: Promise<any>;
     if (this.producto.id) {
-      this.api.put('productos/' + this.producto.id, this.producto);
+      promise = this.api.put('productos/' + this.producto.id, data);
     } else {
 
-      promise = this.api.post('productos', this.producto);
+      promise = this.api.post('productos', data);
     }
 
     promise.then((data) => {

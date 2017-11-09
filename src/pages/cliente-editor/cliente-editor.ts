@@ -13,6 +13,7 @@ export class ClienteEditorPage {
     nit: "",
     direccion: "",
     email: "",
+    telefono: "",
     sexo: "M",
     codigo: "",
   }

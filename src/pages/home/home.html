@@ -11,7 +11,9 @@
   <ion-card>
     <ion-item (click)="selectCliente()">
       <span *ngIf="!cliente"> Seleccionar Cliente</span>
-      <span *ngIf="cliente">{{cliente.nombres}}</span>
+      <span *ngIf="cliente">{{cliente.nombres}} {{ cliente.apellidos}}
+        <small>{{cliente.nit}}</small>
+      </span>
       <ion-icon *ngIf="!cliente" name="arrow-dropdown" item-right></ion-icon>
     </ion-item>
   </ion-card>

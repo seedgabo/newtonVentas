@@ -3,8 +3,8 @@ import { Api } from './../../providers/Api';
 import { ClienteSearchPage } from './../cliente-search/cliente-search';
 import { ProductSearchPage } from './../product-search/product-search';
 import { Component } from '@angular/core';
-import { NavController, ModalController, LoadingController, AlertController, ToastController } from 'ionic-angular';
-
+import { NavController, ModalController, LoadingController, AlertController, ToastController, IonicPage } from 'ionic-angular';
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'

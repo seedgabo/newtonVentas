@@ -68,8 +68,7 @@ export class ProductosPage {
     modal.present();
     modal.onDidDismiss((data) => {
       if (data) {
-        this.api.productos.push(data);
-        this.filter();
+        producto = data;
       }
 
     })
