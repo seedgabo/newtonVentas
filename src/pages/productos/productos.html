@@ -11,6 +11,7 @@
 
 
 <ion-content>
+  <input type="file" accept="image/*" style="display:none;" id="input-file" (change)="readFile($event)">
   <div text-center>
     <ion-spinner color="primary" *ngIf="loading"></ion-spinner>
   </div>

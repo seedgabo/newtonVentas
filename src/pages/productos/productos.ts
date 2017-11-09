@@ -1,6 +1,7 @@
 import { Api } from './../../providers/Api';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, ActionSheetController } from 'ionic-angular';
+import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 
 @IonicPage()
 @Component({
@@ -11,7 +12,8 @@ export class ProductosPage {
   productos = [];
   query = ""
   loading = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public modal: ModalController, public actionsheet: ActionSheetController) {
+  producto_image;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public modal: ModalController, public actionsheet: ActionSheetController, public toast: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -54,6 +56,12 @@ export class ProductosPage {
           this.edit(producto)
         }
       }, {
+        text: "Editar Imagen",
+        icon: "camera",
+        handler: () => {
+          this.askFile(producto)
+        }
+      }, {
         text: "Eliminar",
         icon: "trash",
         handler: () => {
@@ -93,6 +101,41 @@ export class ProductosPage {
       }
 
     })
+  }
+
+
+  askFile(producto) {
+    this.producto_image = producto;
+    var filer: any = document.querySelector("#input-file")
+    filer.click();
+  }
+
+  readFile(event) {
+    try {
+      var reader: any = new FileReader();
+      reader.readAsDataURL(event.target.files[0])
+      reader.onload = (result) => {
+        this.producto_image.image_url = result.target.result;
+        this.uploadImage(this.producto_image.id)
+      };
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  uploadImage(id) {
+    return this.api.post('images/upload/producto/' + id, { image: this.producto_image.image_url })
+      .then((data: any) => {
+        console.log(data);
+        this.producto_image.image = data.image;
+        this.producto_image.image_url = data.url;
+        this.toast.create({
+          message: "Imagen Actualizada",
+          duration: 1500,
+          showCloseButton: true,
+        }).present();
+      })
+      .catch(console.error)
   }
 
 }
