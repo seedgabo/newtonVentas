@@ -1,7 +1,7 @@
 import { Printer } from '@ionic-native/printer';
 import { Api } from './../../providers/Api';
 import { Component } from '@angular/core';
-import { NavController, NavParams, IonicPage } from 'ionic-angular';
+import { NavController, NavParams, IonicPage, ActionSheetController } from 'ionic-angular';
 @IonicPage()
 @Component({
   selector: 'page-list',
@@ -9,7 +9,7 @@ import { NavController, NavParams, IonicPage } from 'ionic-angular';
 })
 export class ListPage {
   total;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public printer: Printer, public api: Api) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public actionsheet: ActionSheetController, public printer: Printer, public api: Api) {
   }
 
   ionViewDidLoad() {
@@ -25,7 +25,39 @@ export class ListPage {
     this.total = total;
   }
 
-  print(invoice, receipt = null) {
+  actions(invoice) {
+    this.actionsheet.create({
+      title: 'Acciones',
+      buttons: [
+        {
+          text: 'Ver Factura',
+          icon: 'document',
+          handler: () => {
+            this.printInvoice(invoice);
+          }
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          icon: 'close',
+        }
+      ]
+    }).present();
+  }
+
+  printInvoice(data) {
+    this.api.get('invoices/' + data.invoice_id + "?with[]=cliente&with[]=items")
+      .then((resp: any) => {
+        console.log("invoice:", resp);
+        resp.items = JSON.parse(resp.items);
+        this.navCtrl.push("PrintInvoicePage", { invoice: resp });
+      })
+      .catch((err) => {
+        this.navCtrl.push("PrintInvoicePage", { invoice: data });
+      })
+  }
+
+  print() {
     setTimeout(() => {
       this.printer.print(document.getElementById('toPrint'), { name: 'invoice' })
         .then(() => {

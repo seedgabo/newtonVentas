@@ -130,7 +130,7 @@ export class HomePage {
   }
 
   toPrint(data) {
-    this.api.get('invoices/' + data.invoice_id + "&with[]=cliente&with[]=items")
+    this.api.get('invoices/' + data.invoice_id + "?with[]=cliente&with[]=items")
       .then((resp: any) => {
         console.log("invoice:", resp);
         resp.items = JSON.parse(resp.items);

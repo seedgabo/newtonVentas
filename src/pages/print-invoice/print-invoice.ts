@@ -2,6 +2,7 @@ import { Api } from './../../providers/Api';
 import { Printer } from '@ionic-native/printer';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import * as moment from 'moment';
 @IonicPage()
 @Component({
   selector: 'page-print-invoice',
@@ -20,6 +21,7 @@ export class PrintInvoicePage {
       this.invoice.receipt = navParams.get('receipt');
     }
     console.log(this.invoice);
+    moment.locale('es');
   }
 
   ionViewDidLoad() {

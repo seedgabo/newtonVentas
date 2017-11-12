@@ -9,10 +9,13 @@
 
 <ion-content id="toPrint">
   <ion-list [virtualScroll]="api.invoices">
-    <button ion-item *virtualItem="let invoice" (click)="invoice" text-wrap>
+    <button ion-item *virtualItem="let invoice" (click)="actions(invoice)" text-wrap>
       <h3 *ngIf="invoice.cliente">
         {{invoice.cliente.nombres}}
       </h3>
+      <p *ngIf="invoice.cliente">
+        {{invoice.cliente.nit}}
+      </p>
       <span item-right>
         {{ invoice.total | currency:'USD':true:'4.2-2' }}
       </span>
