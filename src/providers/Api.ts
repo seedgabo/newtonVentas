@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Platform, AlertController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
 // import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/map';
@@ -20,7 +20,7 @@ export class Api {
   resolve;
   invoices = [];
   productos = [];
-  constructor(public http: Http, private platform: Platform, public storage: Storage, public alert: AlertController) {
+  constructor(public http: Http, public storage: Storage, public alert: AlertController) {
     this.initVar();
   }
 

@@ -1,4 +1,3 @@
-import { PrintInvoicePage } from './../print-invoice/print-invoice';
 import { Api } from './../../providers/Api';
 import { ClienteSearchPage } from './../cliente-search/cliente-search';
 import { ProductSearchPage } from './../product-search/product-search';
