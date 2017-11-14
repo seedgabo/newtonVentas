@@ -113,7 +113,7 @@ export class ListPage {
     this.loading = true;
     var start = moment(date).format("Y-m-d H:m:s")
     var end = moment(date).add(1, 'day').format("Y-m-d H:m:s")
-    this.api.get(`invoices?where[entidad_id]=${this.api.user.entidad_id}&user_id=${this.api.user.id}&whereDategte[created_at]=${start}&whereDatelwe[created_at]=${end}&with[]=cliente&with[]=items`)
+    this.api.get(`invoices?where[entidad_id]=${this.api.user.entidad_id}&user_id=${this.api.user.id}&whereDategte[created_at]=${start}&whereDatelwe[created_at]=${end}&with[]=cliente`)
       .then((data: any) => {
         this.invoices = data;
         this.calculate();
