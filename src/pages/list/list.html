@@ -1,12 +1,17 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Facturas </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="more($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
   <ion-toolbar>
-    <small>
+    <small *ngIf="first_date">
       Desde el: {{first_date | amDateFormat:'DD MMMM YYYY' }}
       <span style="float:right">
         Hasta el: {{last_date | amDateFormat :'DD MMMM YYYY' }}
@@ -19,7 +24,7 @@
   <div text-center>
     <ion-spinner color="primary" *ngIf="loading"></ion-spinner>
   </div>
-  <ion-list [virtualScroll]="api.invoices">
+  <ion-list [virtualScroll]="invoices">
     <button ion-item *virtualItem="let invoice" (click)="actions(invoice)" text-wrap>
       <span item-left>
         {{invoice.number}}
@@ -48,7 +53,8 @@
           <span>{{ total | currency:'USD':true:'4.2-2' }}</span>
         </ion-col>
         <ion-col class="no-print">
-          <button [disabled]="loading || invoices.length > 0" ion-button full color="secondary" (click)="print()">Cierre</button>
+          <button [disabled]="loading" *ngIf="!from" ion-button full color="secondary" (click)="print()">Cierre</button>
+          <button *ngIf="from" ion-button full clear (click)="clearByDate()">Volver</button>
         </ion-col>
       </ion-row>
     </ion-grid>

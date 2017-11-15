@@ -3,6 +3,7 @@ import { Api } from './../../providers/Api';
 import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage, ActionSheetController } from 'ionic-angular';
 import * as moment from 'moment';
+import { PopoverController } from 'ionic-angular/components/popover/popover-controller';
 moment.locale("es");
 @IonicPage()
 @Component({
@@ -11,37 +12,30 @@ moment.locale("es");
 })
 export class ListPage {
   total;
-  first_date = moment().add(10, 'year');
-  last_date = moment().subtract(10, 'year');
+  first_date
+  last_date
   invoices = [];
   loading = true;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public actionsheet: ActionSheetController, public printer: Printer, public api: Api) {
+  from
+  to
+  constructor(public navCtrl: NavController, public navParams: NavParams, public actionsheet: ActionSheetController, public printer: Printer, public popover: PopoverController, public api: Api) {
   }
 
   ionViewDidLoad() {
+    this.from = null;
+    this.to = null;
+    this.invoices = this.api.invoices;
     this.calculate();
   }
 
   calculate() {
-    var invoices
-    if (this.invoices.length > 0) {
-      invoices = this.invoices;
-    }
-    else {
-      invoices = this.api.invoices
-    }
     var total = 0;
-    this.first_date = moment().add(10, 'year');
-    this.last_date = moment().subtract(10, 'year');
-    invoices.forEach((inv) => {
-      if (inv.total)
-        total += inv.total;
-      if (moment(inv.created_at) < this.first_date) {
-        this.first_date = moment(inv.created_at)
-      }
-      if (moment(inv.created_at) > this.last_date) {
-        this.first_date = moment(inv.created_at)
-      }
+    if (this.invoices.length > 0) {
+      this.first_date = moment(this.invoices[0].created_at)
+      this.last_date = moment(this.invoices[this.invoices.length - 1].created_at)
+    }
+    this.invoices.forEach((inv) => {
+      total += inv.total;
     })
     this.total = total;
     this.loading = false;
@@ -110,12 +104,14 @@ export class ListPage {
   }
 
 
-  findByDate(date) {
+  findByDate(date, to = null) {
     this.loading = true;
-    var start = moment(date).format("Y-m-d H:m:s")
-    var end = moment(date).add(1, 'day').format("Y-m-d H:m:s")
-    this.api.get(`invoices?where[entidad_id]=${this.api.user.entidad_id}&user_id=${this.api.user.id}&whereDategte[created_at]=${start}&whereDatelwe[created_at]=${end}&with[]=cliente`)
+    var start = this.from = moment(date).format("Y-m-d H:m:s")
+    var end = this.to = (to ? to : moment(date).add(1, 'day').format("Y-m-d H:m:s"))
+    // this.api.get(`invoices?where[entidad_id]=${this.api.user.entidad_id}&where[user_id]=${this.api.user.id}&whereDategte[created_at]=${start}&whereDatelwe[created_at]=${end}&with[]=cliente`)
+    this.api.get(`invoices?where[user_id]=${this.api.user.id}&whereDategte[created_at]=${start}&whereDatelwe[created_at]=${end}&with[]=cliente`)
       .then((data: any) => {
+        console.log(data);
         this.invoices = data;
         this.calculate();
       })
@@ -123,7 +119,24 @@ export class ListPage {
   }
 
   clearByDate() {
-    this.api.invoices = [];
+    this.ionViewDidLoad()
+  }
+
+
+  more(ev) {
+    let popover = this.popover.create("PopoverListPage", {
+      search: this.findByDate,
+      clear: this.clearByDate
+    })
+    popover.present({ ev: ev });
+    popover.onWillDismiss((data) => {
+      if (!data) return
+      if (data.action == 'search')
+        this.findByDate(data.from, data.to);
+      if (data.action == 'clear')
+        this.clearByDate();
+
+    })
   }
 
 }
