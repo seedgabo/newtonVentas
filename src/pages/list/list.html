@@ -5,6 +5,14 @@
     </button>
     <ion-title>Facturas </ion-title>
   </ion-navbar>
+  <ion-toolbar>
+    <small>
+      Desde el: {{first_date | amDateFormat:'DD MMMM YYYY' }}
+      <span style="float:right">
+        Hasta el: {{last_date | amDateFormat :'DD MMMM YYYY' }}
+      </span>
+    </small>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content id="toPrint">
