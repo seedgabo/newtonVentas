@@ -18,6 +18,7 @@
         <img [src]="product.image.url">
       </ion-thumbnail>
       <h2 text-wrap>{{product.name}}</h2>
+      <small>{{product.referencia}}</small>
       <h2 text-center>{{product.precio | currency:'USD':true:'1.2-2'}}</h2>
       <h3 text-wrap [innerHTML]="product.description"></h3>
     </button>

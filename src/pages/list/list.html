@@ -3,16 +3,22 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Facturas</ion-title>
+    <ion-title>Facturas </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content id="toPrint">
   <ion-list [virtualScroll]="api.invoices">
     <button ion-item *virtualItem="let invoice" (click)="actions(invoice)" text-wrap>
+      <span item-left>
+        {{invoice.number}}
+      </span>
       <h3 *ngIf="invoice.cliente">
         {{invoice.cliente.nombres}}
       </h3>
+      <h4>
+        {{ invoice.created_at | amDateFormat:'dddd, DD MMMM YYYY - h:mm a' }}
+      </h4>
       <p *ngIf="invoice.cliente">
         {{invoice.cliente.nit}}
       </p>

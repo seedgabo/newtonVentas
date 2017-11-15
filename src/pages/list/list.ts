@@ -2,6 +2,9 @@ import { Printer } from '@ionic-native/printer';
 import { Api } from './../../providers/Api';
 import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage, ActionSheetController } from 'ionic-angular';
+import * as moment from 'moment';
+
+moment.locale("es");
 @IonicPage()
 @Component({
   selector: 'page-list',

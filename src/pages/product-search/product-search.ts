@@ -33,8 +33,9 @@ export class ProductSearchPage {
     }
     var filter = this.query.toLowerCase()
     this.products.data = this.api.productos.filter((prod) => {
-      return prod.name.toLowerCase().indexOf(filter) > -1 ||
-        (prod.description && prod.description.toLowerCase().indexOf(filter) > -1);
+      return prod.name.toLowerCase().indexOf(filter) > -1
+        || (prod.referencia && prod.referencia.toLowerCase().indexOf(filter) > -1)
+        || (prod.description && prod.description.toLowerCase().indexOf(filter) > -1)
     })
     this.api.storage.set('recent_products', this.products);
   }
