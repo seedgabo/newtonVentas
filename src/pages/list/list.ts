@@ -3,7 +3,6 @@ import { Api } from './../../providers/Api';
 import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage, ActionSheetController } from 'ionic-angular';
 import * as moment from 'moment';
-
 moment.locale("es");
 @IonicPage()
 @Component({
@@ -12,6 +11,10 @@ moment.locale("es");
 })
 export class ListPage {
   total;
+  first_date = moment().add(10, 'year');
+  last_date = moment().subtract(10, 'year');
+  invoices = [];
+  loading = true;
   constructor(public navCtrl: NavController, public navParams: NavParams, public actionsheet: ActionSheetController, public printer: Printer, public api: Api) {
   }
 
@@ -20,12 +23,28 @@ export class ListPage {
   }
 
   calculate() {
+    var invoices
+    if (this.invoices.length > 0) {
+      invoices = this.invoices;
+    }
+    else {
+      invoices = this.api.invoices
+    }
     var total = 0;
-    this.api.invoices.forEach((inv) => {
+    this.first_date = moment().add(10, 'year');
+    this.last_date = moment().subtract(10, 'year');
+    invoices.forEach((inv) => {
       if (inv.total)
         total += inv.total;
+      if (moment(inv.created_at) < this.first_date) {
+        this.first_date = moment(inv.created_at)
+      }
+      if (moment(inv.created_at) > this.last_date) {
+        this.first_date = moment(inv.created_at)
+      }
     })
     this.total = total;
+    this.loading = false;
   }
 
   actions(invoice) {
@@ -85,7 +104,26 @@ export class ListPage {
 
   clear() {
     this.api.invoices = [];
+    this.invoices = [];
     this.api.storage.set('invoices', []);
     this.calculate();
   }
+
+
+  findByDate(date) {
+    this.loading = true;
+    var start = moment(date).format("Y-m-d H:m:s")
+    var end = moment(date).add(1, 'day').format("Y-m-d H:m:s")
+    this.api.get(`invoices?where[entidad_id]=${this.api.user.entidad_id}&user_id=${this.api.user.id}&whereDategte[created_at]=${start}&whereDatelwe[created_at]=${end}&with[]=cliente`)
+      .then((data: any) => {
+        this.invoices = data;
+        this.calculate();
+      })
+      .catch(console.error)
+  }
+
+  clearByDate() {
+    this.api.invoices = [];
+  }
+
 }

@@ -83,6 +83,7 @@ export class HomePage {
   proccess() {
     var data = {
       user_id: this.api.user.id,
+      entidad_id: this.api.user.entidad_id,
       cliente_id: this.cliente.id,
       items: [],
       estado: 'Pagado',

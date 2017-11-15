@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content id="toPrint">
+  <div text-center>
+    <ion-spinner color="primary" *ngIf="loading"></ion-spinner>
+  </div>
   <ion-list [virtualScroll]="api.invoices">
     <button ion-item *virtualItem="let invoice" (click)="actions(invoice)" text-wrap>
       <span item-left>
@@ -37,7 +40,7 @@
           <span>{{ total | currency:'USD':true:'4.2-2' }}</span>
         </ion-col>
         <ion-col class="no-print">
-          <button ion-button full color="secondary" (click)="print()">Cierre</button>
+          <button [disabled]="loading || invoices.length > 0" ion-button full color="secondary" (click)="print()">Cierre</button>
         </ion-col>
       </ion-row>
     </ion-grid>
