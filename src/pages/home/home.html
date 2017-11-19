@@ -4,6 +4,11 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Home</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="actions()">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -39,12 +44,15 @@
             {{item.precio | currency:'USD':true:'4.2-2' }}
             <small>({{(item.precio * item.quantity ) | currency:'USD':true:'4.2-2'}})</small>
           </ion-col>
+          <ion-col text-right>
+            <b>{{(item.precio * item.quantity )+ (item.precio * item.quantity * item.impuesto/100) | currency:'USD':true:'4.2-2'}}</b>
+          </ion-col>
         </ion-row>
 
         <ion-row text-center>
           <ion-col>
             <button ion-button small icon-only clear (click)="addOne(item)">
-              <ion-icon name="add"></ion-icon>
+              <ion-icon name="add-circle"></ion-icon>
             </button>
           </ion-col>
           <ion-col>
@@ -52,7 +60,7 @@
           </ion-col>
           <ion-col>
             <button ion-button small icon-only clear (click)="removeOne(item)">
-              <ion-icon name="remove"></ion-icon>
+              <ion-icon name="remove-circle"></ion-icon>
             </button>
           </ion-col>
         </ion-row>

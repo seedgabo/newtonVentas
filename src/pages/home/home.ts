@@ -3,6 +3,7 @@ import { ClienteSearchPage } from './../cliente-search/cliente-search';
 import { ProductSearchPage } from './../product-search/product-search';
 import { Component } from '@angular/core';
 import { NavController, ModalController, LoadingController, AlertController, ToastController, IonicPage } from 'ionic-angular';
+import { ActionSheetController } from 'ionic-angular/components/action-sheet/action-sheet-controller';
 @IonicPage()
 @Component({
   selector: 'page-home',
@@ -18,7 +19,8 @@ export class HomePage {
     'appellidos': '',
     'nit': 'No Posee'
   }
-  constructor(public navCtrl: NavController, public modal: ModalController, public api: Api, public loadingctrl: LoadingController, public alert: AlertController, public toast: ToastController) {
+  propina = null;
+  constructor(public navCtrl: NavController, public modal: ModalController, public api: Api, public loadingctrl: LoadingController, public alert: AlertController, public toast: ToastController, public actionsheet: ActionSheetController) {
 
   }
   ionViewDidLoad() {
@@ -179,6 +181,7 @@ export class HomePage {
             loading.dismiss().then(() => {
               this.items = [];
               this.cliente = null;
+              this.propina = null
               this.toast.create({ message: "Pedido Procesado", duration: 3000 }).present();
             });
           })
@@ -221,6 +224,37 @@ export class HomePage {
     invoice.cliente = cliente;
     this.api.invoices.push(invoice);
     this.api.storage.set('invoices', this.api.invoices);
+  }
+
+  actions() {
+    this.actionsheet.create({
+      title: "Acciones",
+      buttons: [{
+        text: 'Agregar Propina',
+        icon: 'cash',
+        handler: () => {
+          this.agregarPropina();
+        }
+      }, {
+        text: 'Cancelar',
+        role: 'cancel',
+        icon: 'close',
+      }]
+    }).present();
+  }
+
+  agregarPropina() {
+    var total = this.total();
+    this.items.push({
+      id: null,
+      image_id: null,
+      name: 'Propina',
+      referencia: 'Propina',
+      precio: total,
+      iva: 0,
+      impuesto: 0,
+      quantity: 1,
+    });
   }
 
 }
