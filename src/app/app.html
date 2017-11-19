@@ -12,16 +12,15 @@
           <ion-icon name small item-left [name]="p.icon"></ion-icon>
           {{p.title}}
         </button>
-        <ion-list-header>
-          <ion-icon small item-left name="settings"></ion-icon>
-          Configuración
-        </ion-list-header>
         <button menuClose ion-item (click)="logout()">
           <ion-icon item-left small name="log-out"></ion-icon>
           Cerrar Sesión
         </button>
       </ion-list>
     </ion-content>
+    <ion-footer>
+      <img src="http://newton.eycproveedores.com/newton/public/img/logo-newton.png" alt="">
+    </ion-footer>
 
   </ion-menu>
 

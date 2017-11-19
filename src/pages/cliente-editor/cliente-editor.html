@@ -15,7 +15,9 @@
 <ion-content>
   <ion-list>
     <ion-item>
-      <ion-label floating>Nombres</ion-label>
+      <ion-label floating>Nombres
+        <span ion-text color="danger"> * </span>
+      </ion-label>
       <ion-input type="text" [(ngModel)]="cliente.nombres"></ion-input>
     </ion-item>
     <ion-item>
@@ -23,21 +25,16 @@
       <ion-input type="text" [(ngModel)]="cliente.apellidos"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label floating>Nit/Cedula</ion-label>
+      <ion-label floating>Nit/Cedula
+        <span ion-text color="danger"> * </span>
+      </ion-label>
       <ion-input type="text" [(ngModel)]="cliente.nit"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Sexo</ion-label>
-      <ion-select [(ngModel)]="cliente.sexo">
-        <ion-option value="M">Masculino</ion-option>
-        <ion-option value="F">Femenino</ion-option>
-      </ion-select>
     </ion-item>
   </ion-list>
   <div class="text-right">
-    <button ion-button (click)="more=!more" *ngIf="!more" icon-left clear>
-      <ion-icon name="add-circle"></ion-icon>
-      Mas
+    <button ion-button (click)="more=!more" icon-left clear>
+      <ion-icon [name]="more ? 'remove-circle' : 'add-circle'"></ion-icon>
+      {{ !more ? 'Mas':'Menos'}}
     </button>
   </div>
   <ion-list *ngIf="more">
@@ -46,6 +43,13 @@
       <ion-input type="email" [(ngModel)]="cliente.email"></ion-input>
     </ion-item>
     <ion-item>
+      <ion-item>
+        <ion-label floating>Sexo</ion-label>
+        <ion-select [(ngModel)]="cliente.sexo">
+          <ion-option value="M">Masculino</ion-option>
+          <ion-option value="F">Femenino</ion-option>
+        </ion-select>
+      </ion-item>
       <ion-label floating> Telefono </ion-label>
       <ion-input type="email" [(ngModel)]="cliente.telefono"></ion-input>
     </ion-item>

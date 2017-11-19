@@ -10,13 +10,19 @@ export class Api {
   username: string;
   password: string;
   token: string;
-  // url: string = 'http://localhost/newton/public/';
   url: string = 'http://newton.eycproveedores.com/newtonPenon/public/';
   user: any = null;
   ready = new Promise((resolve, reject) => {
     this.resolve = resolve;
   })
   settings: any = {};
+  settings_invoices: any = {
+    nombre: null,
+    nit: null,
+    resolucion: null,
+    cabecera: null,
+    imagen: null
+  }
   resolve;
   invoices = [];
   productos = [];
@@ -28,6 +34,7 @@ export class Api {
     this.storage.get("username").then((data) => data != undefined ? this.username = data : '');
     this.storage.get("password").then((data) => data != undefined ? this.password = data : '');
     this.storage.get("settings").then((data) => data != undefined ? this.settings = data : '');
+    this.storage.get("settings_invoices").then((data) => data != undefined ? this.settings_invoices = data : '');
     this.storage.get("user").then((data) => {
       data != undefined ? this.user = JSON.parse(data) : null;
       this.resolve(this.user);

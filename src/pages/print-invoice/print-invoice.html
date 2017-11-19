@@ -9,10 +9,13 @@
             <table style="width: 100%;line-height: inherit;text-align: left;">
               <tr>
                 <td colspan="3" class="title" style="padding: 5px;vertical-align: top;padding-bottom: 20px;font-size: 45px;line-height: 45px;color: #333;">
-                  <img [src]="api.url + 'img/logo.png'" style="max-height:100px; max-width:100px;">
+                  <img *ngIf="!api.settings_invoices.imagen" [src]="api.url + 'img/logo.png'" style="max-height:100px; max-width:100px;">
+
+                  <img *ngIf="api.settings_invoices.imagen" [src]="api.settings_invoices.imagen" style="max-height:100px; max-width:100px;">
                 </td>
                 <td style="padding: 5px;vertical-align: top;text-align: right;padding-bottom: 20px;width:100%">
-                  {{'Factura' }} #: {{invoice.id }}
+                  {{'Factura' }} #: {{invoice.numero }}
+                  <br> {{ 'Metodo de Pago'}}: {{ invoice.pago }}
                   <br> {{ 'Fecha' }}: {{invoice.fecha | amDateFormat:'LLL'}}
                   <br> {{ 'Del:' }} {{ invoice.created_at | amDateFormat:'LLL'}}
                 </td>
@@ -26,11 +29,10 @@
             <table style="width: 100%;line-height: inherit;text-align: left;">
               <tr>
                 <td style="padding: 5px;vertical-align: top;padding-bottom: 40px;">
-                  {{api.settings.nombre_empresa}}
-                  <br> {{api.settings.nit}}
-                  <br> {{api.settings.resolucion_dian}}
-                  <br> {{api.settings.cabecera_factura}}
-
+                  {{api.settings_invoices.nombre? api.settings_invoices.nombre : api.settings.nombre_empresa}}
+                  <br> {{ api.settings_invoices.nit ? api.settings_invoices.nit : api.settings.nit}}
+                  <br> {{api.settings_invoices.resolucion? api.settings_invoices.resolucion : api.settings.resolucion_dian}}
+                  <br> {{api.settings_invoices.cabecera ? api.settings_invoices.cabecera: api.settings.cabecera_factura}}
                 </td>
                 <td style="padding: 5px;vertical-align: top;padding-bottom: 40px;">
                 </td>

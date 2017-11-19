@@ -12,18 +12,31 @@ export class HomePage {
   items = [];
   cliente = null;
   loading = false;
+  default_cliente: any = {
+    'id': 99,
+    'nombres': 'No Definido',
+    'appellidos': '',
+    'nit': 'No Posee'
+  }
   constructor(public navCtrl: NavController, public modal: ModalController, public api: Api, public loadingctrl: LoadingController, public alert: AlertController, public toast: ToastController) {
 
   }
   ionViewDidLoad() {
-    this.api.get('getParameters')
-      .then((resp) => {
-        this.api.settings = resp;
-        this.api.storage.set('settings', resp);
+    this.api.ready.then(() => {
+      this.api.get('getParameters')
+        .then((resp) => {
+          this.api.settings = resp;
+          this.api.storage.set('settings', resp);
+        })
+        .catch(console.error)
+      this.loadItems();
+      this.api.get('clientes/99').then((data) => {
+        this.default_cliente = data;
       })
-      .catch(console.error)
-    this.loadItems();
+        .catch(console.error)
+    })
   }
+
   loadItems() {
     this.loading = true;
     this.api.get('productos?where[entidad_id]=' + this.api.user.entidad_id)
@@ -80,13 +93,58 @@ export class HomePage {
     return total;
   }
 
-  proccess() {
-    var data = {
+  askPago() {
+    this.alert.create({
+      title: 'Forma de Pago',
+      subTitle: 'Seleccione',
+      inputs: [{
+        type: 'radio',
+        label: 'Efectivo',
+        value: 'efectivo',
+        checked: true
+      },
+      {
+        type: 'radio',
+        label: 'Tarjeta de Débito',
+        value: 'Tarjeta de Débito',
+        checked: false
+      },
+      {
+        type: 'radio',
+        label: 'Tarjeta de Crédito',
+        value: 'Tarjeta de Crédito',
+        checked: false
+      },
+      {
+        type: 'radio',
+        label: 'Otros',
+        value: 'Otros',
+        checked: false
+      }],
+      buttons: [{
+        text: 'cancelar',
+        role: 'cancel',
+        handler: () => {
+
+        }
+      }, {
+        text: 'Facturar',
+        role: 'process',
+        handler: (data) => {
+          this.proccess(data);
+        }
+      }]
+    }).present();
+  }
+
+  proccess(metodo) {
+    var data: any = {
       user_id: this.api.user.id,
       entidad_id: this.api.user.entidad_id,
-      cliente_id: this.cliente.id,
+      cliente_id: this.cliente ? this.cliente.id : this.default_cliente.id,
       items: [],
       estado: 'Pagado',
+      pago: metodo,
       vendedor_id: this.api.user.id,
     }
     this.items.forEach((item) => {
@@ -111,23 +169,40 @@ export class HomePage {
       spinner: 'hide'
     })
     loading.present();
-
-    this.api.post("pedidos", data)
-      .then((resp) => {
-        this.saveData(resp, this.cliente);
-        this.toPrint(resp);
-        loading.dismiss().then(() => {
-          this.items = [];
-          this.cliente = null;
-          this.toast.create({ message: "Pedido Procesado", duration: 3000 }).present();
-        });
+    this.getNumeroPedido()
+      .then((number: number) => {
+        data.numero_pedido = number + 1;
+        this.api.post("pedidos", data)
+          .then((resp) => {
+            this.saveData(resp, this.cliente ? this.cliente : this.default_cliente);
+            this.toPrint(resp);
+            loading.dismiss().then(() => {
+              this.items = [];
+              this.cliente = null;
+              this.toast.create({ message: "Pedido Procesado", duration: 3000 }).present();
+            });
+          })
+          .catch((err) => {
+            loading.dismiss().then(() => {
+              this.alert.create({ title: "Error", message: JSON.stringify(err), buttons: ["Ok"] }).present();
+            });
+          });
       })
       .catch((err) => {
         loading.dismiss().then(() => {
           this.alert.create({ title: "Error", message: JSON.stringify(err), buttons: ["Ok"] }).present();
         });
-      });
+      })
   }
+
+  getNumeroPedido() {
+    return new Promise((resolve, reject) => {
+      this.api.get(`pedidos?where[entidad_id]=${this.api.user.entidad_id}&count=1`)
+        .then(resolve)
+        .catch(reject)
+    })
+  }
+
 
   toPrint(data) {
     this.api.get('invoices/' + data.invoice_id + "?with[]=cliente&with[]=items")
@@ -139,7 +214,7 @@ export class HomePage {
   }
 
   canProccess() {
-    return this.cliente && this.items.length > 0;
+    return this.items.length > 0;
   }
 
   saveData(invoice, cliente) {

@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle icon-only>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Configuración</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="_save()">
+        <ion-icon name="cloud-upload"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content no-padding>
+  <ion-list>
+    <ion-item-divider color="light">
+      Facturación
+    </ion-item-divider>
+    <ion-item>
+      <ion-label floating>Nombre Para Mostrar</ion-label>
+      <ion-input (ionChange)="save()" [(ngModel)]="api.settings_invoices.nombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>NIT</ion-label>
+      <ion-input (ionChange)="save()" [(ngModel)]="api.settings_invoices.nit"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Resolución DIAN</ion-label>
+      <ion-input (ionChange)="save()" [(ngModel)]="api.settings_invoices.resolucion"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Cabecera</ion-label>
+      <ion-input (ionChange)="save()" [(ngModel)]="api.settings_invoices.cabecera"></ion-input>
+    </ion-item>
+    <div text-center (click)="askFile()">
+      <input type="file" accept="image/*" style="display:none;" id="input-file" (change)="readFile($event)">
+      <img [src]="api.url + 'img/logo.png'" class="img-logo" *ngIf="!api.settings_invoices.imagen">
+      <img [src]="api.settings_invoices.imagen" class="img-logo" *ngIf="api.settings_invoices.imagen">
+      <br>
+      <button block color="light" ion-button>Cambiar Imagen</button>
+    </div>
+
+  </ion-list>
+</ion-content>

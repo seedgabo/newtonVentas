@@ -30,13 +30,14 @@
           </ion-col>
           <ion-col col-1 align-items-start>
             <button ion-button clear small color="danger" (click)="removeItem(i)">
-              <ion-icon name="close"></ion-icon>
+              <ion-icon name="close-circle"></ion-icon>
             </button>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
             {{item.precio | currency:'USD':true:'4.2-2' }}
+            <small>({{(item.precio * item.quantity ) | currency:'USD':true:'4.2-2'}})</small>
           </ion-col>
         </ion-row>
 
@@ -75,8 +76,8 @@
           <span>{{ total() | currency:'USD':true:'4.2-2' }}</span>
         </ion-col>
         <ion-col>
-          <button ion-button block color="secondary" [disabled]="!canProccess()" (click)="proccess()">
-            Procesar
+          <button ion-button block color="secondary" [disabled]="!canProccess()" (click)="askPago()">
+            Facturar
           </button>
         </ion-col>
       </ion-row>

@@ -24,9 +24,10 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: 'HomePage', icon: 'home' },
+      { title: 'Punto de Venta', component: 'HomePage', icon: 'home' },
       { title: 'Facturas', component: 'ListPage', icon: 'list' },
-      { title: 'Productos', component: 'ProductosPage', icon: 'cart' }
+      { title: 'Productos', component: 'ProductosPage', icon: 'cart' },
+      { title: 'Configuración', component: 'SettingsPage', icon: 'settings' },
     ];
     this.api.ready.then((data) => {
       if (data) {
