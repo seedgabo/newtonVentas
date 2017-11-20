@@ -109,8 +109,8 @@ export class ListPage {
 
   findByDate(date, to = null) {
     this.loading = true;
-    var start = this.from = moment(date).format("YYYY-MM-DD")
-    var end = this.to = (to ? to : moment(date).add(1, 'day').format("YYYY-MM-DD"))
+    var start = moment(date).format("YYYY-MM-DD")
+    var end = (to ? moment(to).add(1, 'day').format('YYYY-MM-DD') : moment(date).add(1, 'day').format("YYYY-MM-DD"))
     // this.api.get(`invoices?where[entidad_id]=${this.api.user.entidad_id}&where[user_id]=${this.api.user.id}&whereDategte[created_at]=${start}&whereDatelwe[created_at]=${end}&with[]=cliente`)
     this.api.get(`invoices?where[user_id]=${this.api.user.id}&whereDategte[created_at]=${start}&whereDatelwe[created_at]=${end}&with[]=cliente`)
       .then((data: any) => {
