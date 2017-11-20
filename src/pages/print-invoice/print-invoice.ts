@@ -31,7 +31,7 @@ export class PrintInvoicePage {
   }
   print(invoice, receipt = null) {
     setTimeout(() => {
-      if (this.platform.is('browser')) {
+      if (!this.platform.is('mobile')) {
         return this.toPrintCallback(invoice);
       };
       this.printer.print(document.getElementById('toPrint'), { name: 'invoice' })

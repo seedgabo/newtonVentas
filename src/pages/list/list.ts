@@ -75,7 +75,7 @@ export class ListPage {
 
   print() {
     setTimeout(() => {
-      if (this.platform.is('browser')) {
+      if (!this.platform.is('mobile')) {
         return this.toPrintCallback();
       };
       this.printer.print(document.getElementById('toPrint'), { name: 'invoice' })
