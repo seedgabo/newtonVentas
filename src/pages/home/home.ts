@@ -90,7 +90,7 @@ export class HomePage {
   total() {
     var total = 0;
     this.items.forEach((item) => {
-      total += item.precio * item.quantity;
+      total += item.precio * item.quantity + (item.precio * item.quantity * item.impuesto / 100);
     });
     return total;
   }
