@@ -1,7 +1,7 @@
 import { Api } from './../../providers/Api';
 import { Printer } from '@ionic-native/printer';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import * as moment from 'moment';
 @IonicPage()
 @Component({
@@ -11,7 +11,7 @@ import * as moment from 'moment';
 export class PrintInvoicePage {
   invoice: any = {};
   receipt: any = {};
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public printer: Printer) {
+  constructor(public navCtrl: NavController, public platform: Platform, public navParams: NavParams, public api: Api, public printer: Printer) {
     this.invoice = navParams.get('invoice');
     this.receipt = navParams.get('receipt');
     if (navParams.get('user')) {
@@ -31,6 +31,9 @@ export class PrintInvoicePage {
   }
   print(invoice, receipt = null) {
     setTimeout(() => {
+      if (this.platform.is('browser')) {
+        return this.toPrintCallback(invoice);
+      };
       this.printer.print(document.getElementById('toPrint'), { name: 'invoice' })
         .then(() => {
           this.complete();

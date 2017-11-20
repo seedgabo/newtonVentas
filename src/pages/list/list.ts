@@ -1,7 +1,7 @@
 import { Printer } from '@ionic-native/printer';
 import { Api } from './../../providers/Api';
 import { Component } from '@angular/core';
-import { NavController, NavParams, IonicPage, ActionSheetController } from 'ionic-angular';
+import { NavController, NavParams, IonicPage, ActionSheetController, Platform } from 'ionic-angular';
 import * as moment from 'moment';
 import { PopoverController } from 'ionic-angular/components/popover/popover-controller';
 moment.locale("es");
@@ -18,7 +18,7 @@ export class ListPage {
   loading = true;
   from
   to
-  constructor(public navCtrl: NavController, public navParams: NavParams, public actionsheet: ActionSheetController, public printer: Printer, public popover: PopoverController, public api: Api) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public actionsheet: ActionSheetController, public platform: Platform, public printer: Printer, public popover: PopoverController, public api: Api) {
   }
 
   ionViewDidLoad() {
@@ -75,6 +75,9 @@ export class ListPage {
 
   print() {
     setTimeout(() => {
+      if (this.platform.is('browser')) {
+        return this.toPrintCallback();
+      };
       this.printer.print(document.getElementById('toPrint'), { name: 'invoice' })
         .then(() => {
           this.complete();
