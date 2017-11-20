@@ -62,6 +62,10 @@ export class ListPage {
   }
 
   printInvoice(data) {
+    var id = data.invoice_id;
+    if (!id) {
+      id = data.id;
+    }
     this.api.get('invoices/' + data.invoice_id + "?with[]=cliente&with[]=items")
       .then((resp: any) => {
         console.log("invoice:", resp);
