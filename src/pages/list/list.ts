@@ -109,8 +109,8 @@ export class ListPage {
 
   findByDate(date, to = null) {
     this.loading = true;
-    var start = this.from = moment(date).format("YYYY-MM-DD h:mm:ss")
-    var end = this.to = (to ? to : moment(date).add(1, 'day').format("YYYY-MM-DD h:mm:ss"))
+    var start = this.from = moment(date).format("YYYY-MM-DD")
+    var end = this.to = (to ? to : moment(date).add(1, 'day').format("YYYY-MM-DD"))
     // this.api.get(`invoices?where[entidad_id]=${this.api.user.entidad_id}&where[user_id]=${this.api.user.id}&whereDategte[created_at]=${start}&whereDatelwe[created_at]=${end}&with[]=cliente`)
     this.api.get(`invoices?where[user_id]=${this.api.user.id}&whereDategte[created_at]=${start}&whereDatelwe[created_at]=${end}&with[]=cliente`)
       .then((data: any) => {
@@ -128,16 +128,20 @@ export class ListPage {
 
   more(ev) {
     let popover = this.popover.create("PopoverListPage", {
-      search: this.findByDate,
-      clear: this.clearByDate
+      from: this.from,
+      to: this.to
     })
     popover.present({ ev: ev });
+
     popover.onWillDismiss((data) => {
       if (!data) return
       if (data.action == 'search')
         this.findByDate(data.from, data.to);
       if (data.action == 'clear')
         this.clearByDate();
+
+      this.from = data.from
+      this.to = data.to
 
     })
   }

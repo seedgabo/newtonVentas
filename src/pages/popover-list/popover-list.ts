@@ -12,9 +12,9 @@ export class PopoverListPage {
   search;
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewctrl: ViewController) {
     if (navParams.get('from'))
-      this.from = this.navParams.get('from')
+      this.from = moment(this.navParams.get('from')).format("YYYY - MM - DD")
     if (navParams.get('to'))
-      this.to = this.navParams.get('to')
+      this.to = moment(this.navParams.get('to')).format("YYYY-MM-DD")
   }
 
   ionViewDidLoad() {
