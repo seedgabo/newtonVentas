@@ -244,17 +244,35 @@ export class HomePage {
   }
 
   agregarPropina() {
-    var total = this.total();
-    this.items.push({
-      id: null,
-      image_id: null,
-      name: 'Propina',
-      referencia: 'Propina',
-      precio: total,
-      iva: 0,
-      impuesto: 0,
-      quantity: 1,
-    });
+    var total = this.total() * 0.1;
+    this.alert.create({
+      'title': 'Valor de la propina',
+      inputs: [{
+        label: 'Valor de la propina',
+        placeholder: 'Valor',
+        value: "" + total,
+        type: 'number',
+        name: 'propina'
+      }],
+      buttons: [{
+        text: 'Cancelar'
+      }, {
+        text: 'Agregar',
+        handler: (data) => {
+          if (data && data.propina)
+            this.items.push({
+              id: null,
+              image_id: null,
+              name: 'Propina',
+              referencia: 'Propina',
+              precio: data.propina,
+              iva: 0,
+              impuesto: 0,
+              quantity: 1,
+            });
+        }
+      }]
+    }).present();
   }
 
 }

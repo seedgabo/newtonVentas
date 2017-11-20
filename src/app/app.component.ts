@@ -61,11 +61,12 @@ export class MyApp {
   }
 
   logout() {
-    this.api.storage.clear();
-    this.rootPage = 'LoginPage';
+    this.api.storage.remove('user');
+    this.api.storage.remove('username');
+    this.api.storage.remove('passowrd');
     this.api.user = null;
     this.api.username = null;
     this.api.password = null;
-
+    this.nav.setRoot('LoginPage');
   }
 }
