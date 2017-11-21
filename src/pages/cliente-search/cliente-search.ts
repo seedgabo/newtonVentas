@@ -1,6 +1,6 @@
 import { Api } from './../../providers/Api';
-import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController, ModalController, ActionSheetController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, ViewController, ModalController, ActionSheetController, Searchbar } from 'ionic-angular';
 @Component({
   selector: 'page-cliente-search',
   templateUrl: 'cliente-search.html',
@@ -8,6 +8,7 @@ import { NavController, NavParams, ViewController, ModalController, ActionSheetC
 export class ClienteSearchPage {
   query = ""
   clientes = { data: [] };
+  @ViewChild('searchbar') searchbar: Searchbar;
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewctrl: ViewController, public api: Api, public modal: ModalController, public actionsheet: ActionSheetController) {
     this.api.storage.get('recent_clientes')
       .then((recent_clientes) => {
@@ -18,6 +19,9 @@ export class ClienteSearchPage {
   }
 
   ionViewDidLoad() {
+    setTimeout(() => {
+      this.searchbar.setFocus();
+    }, 300);
   }
   search() {
     this.api.get(`clientes?orWhereLike[cedula]=${this.query}&orWhereLike[nit]=${this.query}&orWhereLike[nombres]=${this.query}&paginate=50`)

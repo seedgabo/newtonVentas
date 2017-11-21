@@ -1,6 +1,6 @@
 import { Api } from './../../providers/Api';
-import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, ViewController, Searchbar } from 'ionic-angular';
 @Component({
   selector: 'page-product-search',
   templateUrl: 'product-search.html',
@@ -8,6 +8,7 @@ import { NavController, NavParams, ViewController } from 'ionic-angular';
 export class ProductSearchPage {
   query = ""
   products = { data: [] };
+  @ViewChild('searchbar') searchbar: Searchbar;
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewctrl: ViewController, public api: Api) {
     this.api.storage.get('recent_products')
       .then((recent_products) => {
@@ -18,6 +19,9 @@ export class ProductSearchPage {
   }
 
   ionViewDidLoad() {
+    setTimeout(() => {
+      this.searchbar.setFocus();
+    }, 300);
   }
   // search() {
   //   this.api.get(`productos?where[entidad_id]=${this.api.user.entidad_id}&whereLike[name]=${this.query}&paginate=50&with[]=image`)

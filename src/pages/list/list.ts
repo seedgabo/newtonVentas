@@ -126,12 +126,11 @@ export class ListPage {
   }
 
 
-  findByDate(date, to = null) {
+  findByDate(date, to = null, only_user = true) {
     this.loading = true;
     var start = moment(date).format("YYYY-MM-DD")
     var end = (to ? moment(to).add(1, 'day').format('YYYY-MM-DD') : moment(date).add(1, 'day').format("YYYY-MM-DD"))
-    // this.api.get(`invoices?where[entidad_id]=${this.api.user.entidad_id}&where[user_id]=${this.api.user.id}&whereDategte[created_at]=${start}&whereDatelwe[created_at]=${end}&with[]=cliente`)
-    this.api.get(`invoices?where[user_id]=${this.api.user.id}&whereDategte[created_at]=${start}&whereDatelwe[created_at]=${end}&with[]=cliente`)
+    this.api.get(`invoices?where[entidad_id]=${this.api.user.entidad_id}&${only_user ? 'where[user_id]=' + this.api.user.id : ''}&whereDategte[created_at]=${start}&whereDatelwe[created_at]=${end}&with[]=cliente`)
       .then((data: any) => {
         console.log(data);
         this.invoices = data;
@@ -155,13 +154,12 @@ export class ListPage {
     popover.onWillDismiss((data) => {
       if (!data) return
       if (data.action == 'search')
-        this.findByDate(data.from, data.to);
+        this.findByDate(data.from, data.to, data.only_user);
       if (data.action == 'clear')
         this.clearByDate();
 
       this.from = data.from
       this.to = data.to
-
     })
   }
 

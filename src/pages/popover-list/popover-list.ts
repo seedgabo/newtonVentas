@@ -9,12 +9,15 @@ import * as moment from 'moment';
 export class PopoverListPage {
   from = moment().format("YYYY-MM-DD")
   to = moment().add(1, 'day').format("YYYY-MM-DD")
+  only_user = true;
   search;
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewctrl: ViewController) {
     if (navParams.get('from'))
-      this.from = moment(this.navParams.get('from')).format("YYYY - MM - DD")
+      this.from = moment(this.navParams.get('from')).format("YYYY-MM-DD")
     if (navParams.get('to'))
       this.to = moment(this.navParams.get('to')).format("YYYY-MM-DD")
+    if (navParams.get('only_user'))
+      this.only_user = navParams.get('only_user')
   }
 
   ionViewDidLoad() {
@@ -24,7 +27,8 @@ export class PopoverListPage {
     this.viewctrl.dismiss({
       action: 'search',
       from: this.from,
-      to: this.to
+      to: this.to,
+      only_user: this.only_user
     });
   }
 
