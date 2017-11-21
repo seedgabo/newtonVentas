@@ -21,7 +21,7 @@ export class ClienteSearchPage {
   ionViewDidLoad() {
     setTimeout(() => {
       this.searchbar.setFocus();
-    }, 300);
+    }, 1000);
   }
   search() {
     this.api.get(`clientes?orWhereLike[cedula]=${this.query}&orWhereLike[nit]=${this.query}&orWhereLike[nombres]=${this.query}&paginate=50`)

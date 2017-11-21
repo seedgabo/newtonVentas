@@ -21,7 +21,7 @@ export class ProductSearchPage {
   ionViewDidLoad() {
     setTimeout(() => {
       this.searchbar.setFocus();
-    }, 300);
+    }, 1000);
   }
   // search() {
   //   this.api.get(`productos?where[entidad_id]=${this.api.user.entidad_id}&whereLike[name]=${this.query}&paginate=50&with[]=image`)
