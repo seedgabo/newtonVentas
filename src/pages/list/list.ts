@@ -23,6 +23,7 @@ export class ListPage {
   }
 
   ionViewDidLoad() {
+    console.log(this.api.invoices)
     this.api.ready.then(() => {
       this.from = null;
       this.to = null;
@@ -107,11 +108,13 @@ export class ListPage {
   }
 
   toPrintCallback() {
-    window.print();
-    this.complete();
     setTimeout(() => {
-      this.printing = false;
-    }, 100);
+      window.print();
+      this.complete();
+      setTimeout(() => {
+        this.printing = false;
+      }, 100);
+    }, 300);
   }
 
   complete() {
