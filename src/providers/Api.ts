@@ -22,7 +22,7 @@ export class Api {
     resolucion: null,
     cabecera: null,
     imagen: null,
-    pie: 'Advertencia, Propina: Por disposición de la superintendencia de Industria y Comercio se informa que en este establecimiento la propina es sugerida al consumidor y corresponde al 10% del subtotal de la cuenta, el cual podrá ser aprobado, rechazado o modificado por usted, de acuerdo con su valoración del servicio prestado. Si no desea cancelar dicho valor haga caso al mismo, si desea cancelar un valor diferente indíquelo así para hacer el ajuste correspondiente.',
+    pie: 'Advertencia, Propina: Por disposición de la superintendencia de Industria y Comercio se informa que en este establecimiento la propina es sugerida al consumidor y corresponde al 10% del subtotal de la cuenta, el cual podrá ser aprobado, rechazado o modificado por usted, de acuerdo con su valoración del servicio prestado. Si no desea cancelar dicho valor haga caso al mismo, si desea cancelar un valor diferente indíquelo así para hacer el ajuste correspondiente',
     tipo_impresion: 'pos',
   }
   resolve;
@@ -38,7 +38,7 @@ export class Api {
     this.storage.get("settings").then((data) => data != undefined ? this.settings = data : '');
     this.storage.get("settings_invoices").then((data) => data != undefined ? this.settings_invoices = data : '');
     this.storage.get("user").then((data) => {
-      data != undefined ? this.user = JSON.parse(data) : Advertencia, Propina: Por disposición de la superintendencia de Industria y Comercio se informa que en este establecimiento la propina es sugerida al consumidor y corresponde al 10 % del subtotal de la cuenta, el cual podrá ser aprobado, rechazado o modificado por usted, de acuerdo con su valoración del servicio prestado.Si no desea cancelar dicho valor haga caso al mismo, si desea cancelar un valor diferente indíquelo así para hacer el ajuste correspondiente.;
+      data != undefined ? this.user = JSON.parse(data) : null;
       this.resolve(this.user);
     });
 

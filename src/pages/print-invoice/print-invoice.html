@@ -133,6 +133,9 @@
 
   <div *ngIf="api.settings_invoices.tipo_impresion == 'pos'" class="printable punto" id="toPrintMini">
     <br>
+    <div text-center>
+      <img *ngIf="api.settings_invoices.imagen" [src]="api.settings_invoices.imagen" style="max-height:60pt; max-width:60pt;">
+    </div>
     <h3 text-center no-margin>
       {{api.settings_invoices.nombre? api.settings_invoices.nombre : api.settings.nombre_empresa}}
     </h3>
@@ -152,7 +155,7 @@
       </b>
     </p>
     <p no-margin>
-      Fecha: {{invoice.fecha | amDateFormat:'DD MMMM YYYY - h:mm a'}}
+      Fecha: {{invoice.created_at | amDateFormat:'DD MMMM YYYY - h:mm a'}}
     </p>
     <p no-margin>
       <b>
@@ -192,7 +195,7 @@
     <div class="separator"></div>
     <br>
     <div text-left>
-      <b>Subtotal:</b> {{ invoice.sub_total | number: '1.2-2'}}
+      <b>Subtotal:</b> {{ subtotal | number: '1.2-2'}}
       <br>
       <span *ngIf="propina > 0">
         <b>Propina:</b> {{ propina | number: '1.2-2'}}
@@ -217,12 +220,27 @@
       </tr>
     </table>
     <br>
+    <div *ngIf="invoice.cliente && invoice.cliente.id != 99">
+      Cliente: {{ invoice.cliente.full_name }}
+      <br> NIT: {{ invoice.cliente.nit }}
+      <span *ngIf="invoice.cliente.telefono">
+        <br> Telefono: {{invoice.cliente.telefono}}</span>
+    </div>
+    <div *ngIf="!(invoice.cliente && invoice.cliente.id != 99)">
+      Cliente: _______________________________
+      <br> NIT: ______________________________
+      <span>
+        <br> Telefono: ___________________
+      </span>
+    </div>
+    <br>
     <br>
     <span>
       {{api.settings_invoices.resolucion? api.settings_invoices.resolucion : api.settings.resolucion_dian}}
     </span>
-    <pre text-wrap text-justify style="font-size:smaller">
-       {{api.settings_invoices.pie? api.settings_invoices.pie : api.settings.pie_factura }}
-    </pre>
+    <br>
+    <div text-wrap text-justify style="font-size:smaller; margin-right: 5pt;">
+      {{api.settings_invoices.pie? api.settings_invoices.pie : api.settings.pie_factura }}
+    </div>
   </div>
 </ion-content>

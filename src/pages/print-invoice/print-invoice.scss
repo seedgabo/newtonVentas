@@ -1,10 +1,13 @@
 page-print-invoice {}
 
+page-print-invoice::-webkit-scrollbar {
+  display: none;
+}
+
 .punto {
   width: 210pt !important;
-  padding: 7pt;
-  height: 500pt;
-  max-height: auto;
+  padding: 0;
+  margin: 0;
 }
 
 .pos-items {

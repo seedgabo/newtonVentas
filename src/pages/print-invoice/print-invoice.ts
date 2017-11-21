@@ -15,6 +15,7 @@ export class PrintInvoicePage {
   propina = 0;
   iva = 0;
   impoconsumo = 0;
+  subtotal = 0;
   constructor(public navCtrl: NavController, public platform: Platform, public navParams: NavParams, public api: Api, public printer: Printer) {
     this.invoice = navParams.get('invoice');
     this.receipt = navParams.get('receipt');
@@ -31,7 +32,7 @@ export class PrintInvoicePage {
   ionViewDidLoad() {
     if (this.navParams.get('print') === undefined || this.navParams.get('print')) {
       this.prepare();
-      // this.print(this.invoice);
+      this.print(this.invoice);
     }
   }
   print(invoice, receipt = null) {
@@ -76,8 +77,12 @@ export class PrintInvoicePage {
     var total = 0;
     var iva = 0;
     var impoconsumo = 0;
+    var subtotal = 0;
     items.forEach((item) => {
       total += item.total;
+      if (item.referencia != 'Propina') {
+        subtotal += item.precio * item.cantidad;
+      }
       if (item.impuesto == 19) {
         iva += item.precio * 19 / 100;
       }
@@ -87,6 +92,7 @@ export class PrintInvoicePage {
     });
     this.impoconsumo = impoconsumo;
     this.iva = iva;
+    this.subtotal = subtotal;
     return total;
   }
 }
