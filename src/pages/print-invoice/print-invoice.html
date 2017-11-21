@@ -1,6 +1,6 @@
 <ion-content>
 
-  <div class="printable" id="toPrint">
+  <div *ngIf="api.settings_invoices.tipo_impresion != 'pos'" class="printable" id="toPrint">
     <div class="invoice-box" style="max-width: 800px;margin: auto;padding: 30px;border: 1px solid #eee;box-shadow: 0 0 10px rgba(0, 0, 0, .15);font-size: 16px;line-height: 24px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #555;">
       <table cellpadding="0" cellspacing="0" style="width: 100%;line-height: inherit;text-align: left;">
 
@@ -123,11 +123,106 @@
             Total:
           </td>
           <td style="padding: 5px;vertical-align: top; text-align: center;border-top: 2px solid #eee;font-weight: bold;">
-            {{ invoice.total | currency:'USD':true:'4.2-2' }}
+            {{ invoice.total | currency:'USD':true:'1.2-2' }}
           </td>
         </tr>
 
       </table>
     </div>
+  </div>
+
+  <div *ngIf="api.settings_invoices.tipo_impresion == 'pos'" class="printable punto" id="toPrintMini">
+    <br>
+    <h3 text-center no-margin>
+      {{api.settings_invoices.nombre? api.settings_invoices.nombre : api.settings.nombre_empresa}}
+    </h3>
+    <h6 text-center no-margin>
+      NIT: {{api.settings_invoices.nit? api.settings_invoices.nit : api.settings.nit}}
+    </h6>
+    <p text-center no-margin>
+      {{api.settings_invoices.direccion? api.settings_invoices.direccion : api.settings.direccion }}
+    </p>
+    <p text-center no-margin>
+      {{api.settings_invoices.cabecera? api.settings_invoices.cabecera : api.settings.cabecera_factura }}
+    </p>
+    <br>
+    <p no-margin>
+      <b>
+        Factura No. {{invoice.numero }}
+      </b>
+    </p>
+    <p no-margin>
+      Fecha: {{invoice.fecha | amDateFormat:'DD MMMM YYYY - h:mm a'}}
+    </p>
+    <p no-margin>
+      <b>
+        Empleado:
+      </b>
+      <span *ngIf="invoice.user">{{invoice.user.full_name}}</span>
+      <span *ngIf="!invoice.user">{{ api.user.full_name }}</span>
+    </p>
+    <p *ngIf="invoice.pago" no-margin>
+      <b>
+        Pago:
+      </b>
+      <span>
+        {{ invoice.pago }}
+      </span>
+    </p>
+    <br>
+    <div class="separator"></div>
+    <table style="width:100%">
+      <thead>
+        <tr text-center>
+          <th>Cant</th>
+          <th>Item</th>
+          <th>Precio</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody text-center class="pos-items">
+        <tr *ngFor="let item of items">
+          <td>{{ item.cantidad }}</td>
+          <td style="width:50pt">{{item.name}}</td>
+          <td>{{item.precio | number: '1.2-2'}}</td>
+          <td>{{item.subtotal | number: '1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="separator"></div>
+    <br>
+    <div text-left>
+      <b>Subtotal:</b> {{ invoice.sub_total | number: '1.2-2'}}
+      <br>
+      <span *ngIf="propina > 0">
+        <b>Propina:</b> {{ propina | number: '1.2-2'}}
+      </span>
+    </div>
+    <h5 text-center> Detalles de Impuestos:</h5>
+    <p *ngIf="iva > 0" no-margin>
+      <b>IVA</b> {{ iva | number: '1.2-2'}}
+    </p>
+    <p *ngIf="impoconsumo >0" no-margin>
+      <b>Impoconsumo</b> {{ impoconsumo | number: '1.2-2'}}
+    </p>
+    <p *ngIf="impoconsumo > 0 && iva > 0" no-margin>
+      <b>Total Imp.</b> {{ impoconsumo + iva | number: '1.2-2' }}
+    </p>
+    <br>
+    <div class="separator"></div>
+    <table style="width:100%">
+      <tr>
+        <th> Total:</th>
+        <th> {{ invoice.total | number: '1.2-2'}} </th>
+      </tr>
+    </table>
+    <br>
+    <br>
+    <span>
+      {{api.settings_invoices.resolucion? api.settings_invoices.resolucion : api.settings.resolucion_dian}}
+    </span>
+    <pre text-wrap text-justify style="font-size:smaller">
+       {{api.settings_invoices.pie? api.settings_invoices.pie : api.settings.pie_factura }}
+    </pre>
   </div>
 </ion-content>

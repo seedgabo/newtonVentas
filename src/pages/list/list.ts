@@ -22,10 +22,12 @@ export class ListPage {
   }
 
   ionViewDidLoad() {
-    this.from = null;
-    this.to = null;
-    this.invoices = this.api.invoices;
-    this.calculate();
+    this.api.ready.then(() => {
+      this.from = null;
+      this.to = null;
+      this.invoices = this.api.invoices;
+      this.calculate();
+    })
   }
 
   calculate() {
@@ -66,7 +68,7 @@ export class ListPage {
     if (!id) {
       id = data.id;
     }
-    this.api.get('invoices/' + id + "?with[]=cliente&with[]=items")
+    this.api.get('invoices/' + id + "?with[]=cliente&with[]=items&with[]=user")
       .then((resp: any) => {
         console.log("invoice:", resp);
         resp.items = JSON.parse(resp.items);

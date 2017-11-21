@@ -158,6 +158,7 @@ export class HomePage {
         referencia: item.referencia,
         image_id: item.image_id,
         iva: item.iva,
+        impuesto: item.impuesto,
         descuento: 0,
       })
     })

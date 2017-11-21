@@ -26,14 +26,28 @@
       <ion-label floating>NIT</ion-label>
       <ion-input (ionChange)="save()" [(ngModel)]="api.settings_invoices.nit"></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-label floating>Resolución DIAN</ion-label>
-      <ion-input (ionChange)="save()" [(ngModel)]="api.settings_invoices.resolucion"></ion-input>
-    </ion-item>
+
     <ion-item>
       <ion-label floating>Cabecera</ion-label>
       <ion-input (ionChange)="save()" [(ngModel)]="api.settings_invoices.cabecera"></ion-input>
     </ion-item>
+
+    <ion-item>
+      <ion-label floating>Dirección</ion-label>
+      <ion-input (ionChange)="save()" [(ngModel)]="api.settings_invoices.direccion"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Resolución DIAN</ion-label>
+      <ion-textarea (ionChange)="save()" [(ngModel)]="api.settings_invoices.resolucion"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Pie Factura</ion-label>
+      <ion-textarea (ionChange)="save()" [(ngModel)]="api.settings_invoices.pie"></ion-textarea>
+    </ion-item>
+
+
     <div text-center (click)="askFile()">
       <input type="file" accept="image/*" style="display:none;" id="input-file" (change)="readFile($event)">
       <img [src]="api.url + 'img/logo.png'" class="img-logo" *ngIf="!api.settings_invoices.imagen">
@@ -42,5 +56,21 @@
       <button block color="light" ion-button>Cambiar Imagen</button>
     </div>
 
+    <ion-item-divider color="light">
+      Impresión
+    </ion-item-divider>
+
+    <div radio-group [(ngModel)]="api.settings_invoices.tipo_impresion">
+
+      <ion-item>
+        <ion-label>Impresion Normal</ion-label>
+        <ion-radio (ionSelect)="save()" value="normal"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Impresión POS</ion-label>
+        <ion-radio (ionSelect)="save()" value="pos"></ion-radio>
+      </ion-item>
+    </div>
   </ion-list>
 </ion-content>
