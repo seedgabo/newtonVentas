@@ -31,7 +31,7 @@ export class MyApp {
     ];
     this.api.ready.then((data) => {
       if (data) {
-        // this.rootPage = 'HomePage';
+        this.rootPage = 'HomePage';
       }
       else {
         this.rootPage = 'LoginPage';
