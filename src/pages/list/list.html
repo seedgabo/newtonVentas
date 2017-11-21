@@ -1,11 +1,11 @@
 <ion-header>
   <ion-navbar color="primary">
-    <button ion-button menuToggle>
+    <button ion-button menuToggle class="no-print">
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Facturas </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="more($event)">
+      <button ion-button icon-only (click)="more($event)" class="no-print">
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-buttons>
@@ -20,37 +20,67 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content id="toPrint">
-  <div text-center>
-    <ion-spinner color="primary" *ngIf="loading"></ion-spinner>
+<ion-content>
+  <div *ngIf="!printing || api.settings_invoices.tipo_impresion != 'pos'" id="toPrint">
+    <div text-center>
+      <ion-spinner color="primary" *ngIf="loading"></ion-spinner>
+    </div>
+    <ion-list [virtualScroll]="invoices">
+      <button ion-item *virtualItem="let invoice" (click)="actions(invoice)" text-wrap>
+        <span item-left>
+          {{invoice.numero}}
+        </span>
+        <h3 *ngIf="invoice.cliente">
+          {{invoice.cliente.nombres}}
+        </h3>
+        <h4>
+          {{ invoice.created_at | amDateFormat:'dddd, DD MMMM YYYY - h:mm a' }}
+        </h4>
+        <p *ngIf="invoice.cliente">
+          {{invoice.cliente.nit}}
+        </p>
+        <span item-right>
+          {{ invoice.total | currency:'USD':true:'4.2-2' }}
+        </span>
+      </button>
+    </ion-list>
   </div>
-  <ion-list [virtualScroll]="invoices">
-    <button ion-item *virtualItem="let invoice" (click)="actions(invoice)" text-wrap>
-      <span item-left>
-        {{invoice.number}}
-      </span>
-      <h3 *ngIf="invoice.cliente">
-        {{invoice.cliente.nombres}}
-      </h3>
-      <h4>
-        {{ invoice.created_at | amDateFormat:'dddd, DD MMMM YYYY - h:mm a' }}
-      </h4>
-      <p *ngIf="invoice.cliente">
-        {{invoice.cliente.nit}}
-      </p>
-      <span item-right>
-        {{ invoice.total | currency:'USD':true:'4.2-2' }}
-      </span>
-    </button>
-  </ion-list>
+
+  <div *ngIf="printing && api.settings_invoices.tipo_impresion == 'pos'" class="printable punto" id="toPrintMini">
+    <table style="width:100%">
+      <thead>
+        <tr>
+          <th>Factura # </th>
+          <th>Cliente</th>
+          <th>Fecha</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let invoice of invoices">
+        <tr>{{ invoice.numero }}</tr>
+        <tr style="width:50pt">{{ invoice.cliente ? invoice.cliente.full_name : 'N/A' }}</tr>
+        <tr>{{ invoice.created_at | amDateFormat:"D/MM/YY H:mm:ss a" }} </tr>
+        <tr>{{ invoice.total | number:'1.2-2' }}</tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th></th>
+          <th></th>
+          <th>Total:</th>
+          <th>{{ total | number:'1.2-2' }}</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 </ion-content>
-<ion-footer>
+
+<ion-footer *ngIf="!printing || api.settings_invoices.tipo_impresion != 'pos'">
   <ion-toolbar>
     <ion-grid>
       <ion-row>
         <ion-col>
           <b>Total:</b>
-          <span>{{ total | currency:'USD':true:'4.2-2' }}</span>
+          <span>{{ total | currency:'USD':true:'1.2-2' }}</span>
         </ion-col>
         <ion-col class="no-print">
           <button [disabled]="loading" *ngIf="!from" ion-button full color="secondary" (click)="print()">Cierre</button>

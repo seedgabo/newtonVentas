@@ -40,10 +40,16 @@ export class PrintInvoicePage {
       if (!this.platform.is('mobile')) {
         return this.toPrintCallback(invoice);
       };
-      this.printer.print(document.getElementById('toPrint'), { name: 'invoice' })
-        .then(() => {
-          this.complete();
-        })
+      var promise;
+      if (this.api.settings_invoices.tipo_impresion == "pos") {
+        promise = this.printer.print(document.getElementById('toPrintMini'), { name: 'invoice' })
+
+      } else {
+        promise = this.printer.print(document.getElementById('toPrint'), { name: 'invoice' })
+      }
+      promise.then(() => {
+        this.complete();
+      })
         .catch((err) => {
           this.toPrintCallback(invoice);
           console.error(err);

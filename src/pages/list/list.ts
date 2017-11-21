@@ -18,6 +18,7 @@ export class ListPage {
   loading = true;
   from
   to
+  printing = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public actionsheet: ActionSheetController, public platform: Platform, public printer: Printer, public popover: PopoverController, public api: Api) {
   }
 
@@ -68,6 +69,7 @@ export class ListPage {
     if (!id) {
       id = data.id;
     }
+
     this.api.get('invoices/' + id + "?with[]=cliente&with[]=items&with[]=user")
       .then((resp: any) => {
         console.log("invoice:", resp);
@@ -81,13 +83,21 @@ export class ListPage {
 
   print() {
     setTimeout(() => {
+      this.printing = true;
       if (!this.platform.is('mobile')) {
         return this.toPrintCallback();
       };
-      this.printer.print(document.getElementById('toPrint'), { name: 'invoice' })
-        .then(() => {
-          this.complete();
-        })
+      var promise;
+      if (this.api.settings_invoices.tipo_impresion == "pos") {
+        promise = this.printer.print(document.getElementById('toPrintMini'), { name: 'invoice' })
+
+      } else {
+        promise = this.printer.print(document.getElementById('toPrint'), { name: 'invoice' })
+      }
+      promise.then(() => {
+        this.complete();
+        this.printing = false;
+      })
         .catch((err) => {
           this.toPrintCallback();
           console.error(err);
@@ -99,6 +109,9 @@ export class ListPage {
   toPrintCallback() {
     window.print();
     this.complete();
+    setTimeout(() => {
+      this.printing = false;
+    }, 100);
   }
 
   complete() {
