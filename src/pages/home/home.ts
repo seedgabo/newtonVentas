@@ -20,6 +20,7 @@ export class HomePage {
     'nit': 'No Posee'
   }
   propina = null;
+  descuento = 0;
   constructor(public navCtrl: NavController, public modal: ModalController, public api: Api, public loadingctrl: LoadingController, public alert: AlertController, public toast: ToastController, public actionsheet: ActionSheetController) {
 
   }
@@ -159,7 +160,7 @@ export class HomePage {
         image_id: item.image_id,
         iva: item.iva,
         impuesto: item.impuesto,
-        descuento: 0,
+        descuento: this.calculateDescuento(item),
       })
     })
 
@@ -183,6 +184,7 @@ export class HomePage {
               this.items = [];
               this.cliente = null;
               this.propina = null
+              this.descuento = 0;
               this.toast.create({ message: "Pedido Procesado", duration: 3000 }).present();
             });
           })
@@ -205,6 +207,12 @@ export class HomePage {
         .then(resolve)
         .catch(reject)
     })
+  }
+
+  calculateDescuento(item) {
+    return 0;
+    // var total = (item.precio * item.quantity * (1 + item.impuesto / 100));
+    // return total * this.descuento;
   }
 
 
