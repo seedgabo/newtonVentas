@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>Pagos</ion-title>
+    <ion-buttons end>
+      <button ion-button clear icon-only (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card *ngFor="let pago of pagos;let i = index">
+    <ion-card-header text-right>
+      <ion-icon name="remove-circle" color="danger" item-end (click)="remove(i)"></ion-icon>
+    </ion-card-header>
+    <ion-item>
+      <ion-label floating>Metodo</ion-label>
+      <ion-select [(ngModel)]="pago.metodo">
+        <ion-option [value]="metodo" *ngFor="let metodo of metodos">
+          {{metodo}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Monto</ion-label>
+      <ion-input type="number" [(ngModel)]="pago.monto"></ion-input>
+    </ion-item>
+  </ion-card>
+
+
+  <ion-fab bottom right small (click)="add()">
+    <button ion-fab>
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <button ion-button color="light" block (click)="cancel()">Cancelar</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button color="primary" block [disabled]="!canSave()" (click)="save()">Guardar</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

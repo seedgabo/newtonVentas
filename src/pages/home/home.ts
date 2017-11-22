@@ -4,6 +4,7 @@ import { ProductSearchPage } from './../product-search/product-search';
 import { Component } from '@angular/core';
 import { NavController, ModalController, LoadingController, AlertController, ToastController, IonicPage } from 'ionic-angular';
 import { ActionSheetController } from 'ionic-angular/components/action-sheet/action-sheet-controller';
+import { PopoverController } from 'ionic-angular/components/popover/popover-controller';
 @IonicPage()
 @Component({
   selector: 'page-home',
@@ -21,7 +22,7 @@ export class HomePage {
   }
   propina = null;
   descuento = 0;
-  constructor(public navCtrl: NavController, public modal: ModalController, public api: Api, public loadingctrl: LoadingController, public alert: AlertController, public toast: ToastController, public actionsheet: ActionSheetController) {
+  constructor(public navCtrl: NavController, public modal: ModalController, public api: Api, public loadingctrl: LoadingController, public popover: PopoverController, public alert: AlertController, public toast: ToastController, public actionsheet: ActionSheetController) {
 
   }
   ionViewDidLoad() {
@@ -120,9 +121,15 @@ export class HomePage {
       },
       {
         type: 'radio',
-        label: 'Otros',
-        value: 'Otros',
+        label: 'Otro',
+        value: 'Otro',
         checked: false
+      },
+      {
+        type: 'radio',
+        label: 'detallado',
+        value: 'detallado',
+        checked: false,
       }],
       buttons: [{
         text: 'cancelar',
@@ -134,6 +141,18 @@ export class HomePage {
         text: 'Facturar',
         role: 'process',
         handler: (data) => {
+          if (data == 'detallado') {
+            var popover = this.popover.create("PagosPage", { total: this.total() })
+            popover.present();
+            popover.onDidDismiss((pagos, role) => {
+              if (role != 'accept') {
+                return;
+              }
+              this.proccess(JSON.stringify(pagos));
+            })
+            return
+          }
+
           this.proccess(data);
         }
       }]
