@@ -66,7 +66,7 @@ export class ProductoPage {
   }
 
   canSave() {
-    return this.producto.name.length > 2 && this.producto.precio > 1 && this.producto.referencia.length > 2
+    return this.producto.name.length > 2 && this.producto.precio > 1 && this.producto.referencia.length > 1
   }
 
   dismiss() {

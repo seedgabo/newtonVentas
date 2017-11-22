@@ -49,11 +49,11 @@
     </button>
   </ion-list>
 
-  <div *ngIf="printing && api.settings_invoices.tipo_impresion == 'pos'" class="printable punto" id="toPrintMini">
-    <table style="width:100%;text-align:center;">
+  <div *ngIf="printing && api.settings_invoices.tipo_impresion == 'pos'" class="printable punto" id="toPrintMini" no-margin>
+    <table style="width:100%;text-align:center;margin-right:5pt" no-margin>
       <thead>
         <tr>
-          <th>Fact. # </th>
+          <th>Fact. #</th>
           <th>Cliente</th>
           <th>Fecha</th>
           <th>Total</th>
@@ -61,7 +61,7 @@
       </thead>
       <tbody *ngFor="let invoice of invoices">
         <tr>
-          <td>{{ invoice.numero }}</td>
+          <td>{{ invoice.numero ? invoice.numero: invoice.id }}</td>
           <td style="width:50pt">{{ invoice.cliente ? invoice.cliente.full_name : 'N/A' }}</td>
           <td>{{ invoice.created_at | amDateFormat:"D/MM/YY H:mm:ss a" }} </td>
           <td>{{ invoice.total | number:'1.2-2' }}</td>
