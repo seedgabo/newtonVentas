@@ -16,6 +16,7 @@ export class PrintInvoicePage {
   iva = 0;
   impoconsumo = 0;
   subtotal = 0;
+  pagos = null
   constructor(public navCtrl: NavController, public platform: Platform, public navParams: NavParams, public api: Api, public printer: Printer) {
     this.invoice = navParams.get('invoice');
     this.receipt = navParams.get('receipt');
@@ -67,6 +68,18 @@ export class PrintInvoicePage {
       }
     });
     this.total();
+    if (this.isJson(this.invoice.pago)) {
+      this.pagos = JSON.parse(this.invoice.pago);
+    }
+  }
+
+  isJson(str) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
   }
 
   toPrintCallback(invoice) {

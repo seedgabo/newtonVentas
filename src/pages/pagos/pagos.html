@@ -10,23 +10,33 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
   <ion-card *ngFor="let pago of pagos;let i = index">
-    <ion-card-header text-right>
-      <ion-icon name="remove-circle" color="danger" item-end (click)="remove(i)"></ion-icon>
-    </ion-card-header>
-    <ion-item>
-      <ion-label floating>Metodo</ion-label>
-      <ion-select [(ngModel)]="pago.metodo">
-        <ion-option [value]="metodo" *ngFor="let metodo of metodos">
-          {{metodo}}
-        </ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Monto</ion-label>
-      <ion-input type="number" [(ngModel)]="pago.monto"></ion-input>
-    </ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label floating>Metodo</ion-label>
+            <ion-select [(ngModel)]="pago.metodo">
+              <ion-option [value]="metodo" *ngFor="let metodo of metodos">
+                {{metodo}}
+              </ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label floating>Monto</ion-label>
+            <ion-input type="number" [(ngModel)]="pago.monto"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-2>
+          <button ion-button clear color="danger" item-end (click)="remove(i)">
+            <ion-icon name="remove-circle"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-card>
 
 
@@ -38,6 +48,14 @@
 </ion-content>
 <ion-footer>
   <ion-grid>
+    <ion-row>
+      <ion-col>
+        <span ion-text [color]="total == totalized()?'secondary':'danger'">
+          El Total debe ser: {{total}}
+          <small>({{totalized()}})</small>
+        </span>
+      </ion-col>
+    </ion-row>
     <ion-row>
       <ion-col>
         <button ion-button color="light" block (click)="cancel()">Cancelar</button>

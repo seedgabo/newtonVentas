@@ -19,16 +19,20 @@ export class PagosPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewctrl: ViewController) {
     this.total = this.navParams.get('total');
+    this.pagos.push({
+      metodo: "Efectivo",
+      monto: this.total / 2,
+    });
   }
 
   ionViewDidLoad() {
   }
 
   add() {
-    this.pagos = [{
+    this.pagos.push({
       metodo: "Efectivo",
       monto: 0,
-    }];
+    });
   }
 
   remove(index) {
@@ -46,7 +50,7 @@ export class PagosPage {
   totalized() {
     var total = 0;
     this.pagos.forEach(element => {
-      total += element.monto
+      total += parseInt(element.monto)
     });
     return total;
   }

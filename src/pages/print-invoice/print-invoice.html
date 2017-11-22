@@ -15,7 +15,13 @@
                 </td>
                 <td style="padding: 5px;vertical-align: top;text-align: right;padding-bottom: 20px;width:100%">
                   {{'Factura' }} #: {{invoice.numero }}
-                  <br> {{ 'Metodo de Pago'}}: {{ invoice.pago }}
+                  <br>
+                  <span *ngIf="!pagos;else pagos">{{ 'Metodo de Pago'}}: {{ invoice.pago }}</span>
+                  <ng-template #pagos>
+                    <span *ngFor="let pag of pagos">
+                      <br> {{ pag.metodo }}: {{pag.monto | number:'1.2-2'}}
+                    </span>
+                  </ng-template>
                   <br> {{ 'Fecha' }}: {{invoice.fecha | amDateFormat:'LLL'}}
                   <br> {{ 'Del:' }} {{ invoice.created_at | amDateFormat:'LLL'}}
                 </td>
@@ -168,9 +174,15 @@
       <b>
         Pago:
       </b>
-      <span>
+      <span *ngIf="!pagos;else pagossmall">
         {{ invoice.pago }}
       </span>
+      <ng-template #pagossmall>
+        <span *ngFor="let pag of pagos">
+          {{ pag.metodo }}: {{pag.monto | number:'1.2-2'}}
+          <br>
+        </span>
+      </ng-template>
     </p>
     <br>
     <div class="separator"></div>

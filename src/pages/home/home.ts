@@ -22,7 +22,7 @@ export class HomePage {
   }
   propina = null;
   descuento = 0;
-  constructor(public navCtrl: NavController, public modal: ModalController, public api: Api, public loadingctrl: LoadingController, public popover: PopoverController, public alert: AlertController, public toast: ToastController, public actionsheet: ActionSheetController) {
+  constructor(public navCtrl: NavController, public modal: ModalController, public api: Api, public loadingctrl: LoadingController, public alert: AlertController, public toast: ToastController, public actionsheet: ActionSheetController) {
 
   }
   ionViewDidLoad() {
@@ -142,9 +142,9 @@ export class HomePage {
         role: 'process',
         handler: (data) => {
           if (data == 'detallado') {
-            var popover = this.popover.create("PagosPage", { total: this.total() })
-            popover.present();
-            popover.onDidDismiss((pagos, role) => {
+            var modal = this.modal.create("PagosPage", { total: this.total() })
+            modal.present();
+            modal.onDidDismiss((pagos, role) => {
               if (role != 'accept') {
                 return;
               }
