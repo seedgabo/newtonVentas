@@ -4,7 +4,6 @@ import { ProductSearchPage } from './../product-search/product-search';
 import { Component } from '@angular/core';
 import { NavController, ModalController, LoadingController, AlertController, ToastController, IonicPage } from 'ionic-angular';
 import { ActionSheetController } from 'ionic-angular/components/action-sheet/action-sheet-controller';
-import { PopoverController } from 'ionic-angular/components/popover/popover-controller';
 @IonicPage()
 @Component({
   selector: 'page-home',
