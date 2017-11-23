@@ -35,6 +35,7 @@ export class ListPage {
       this.to = null;
       this.invoices = this.api.invoices;
       this.calculate();
+      console.log(this.totals);
     })
   }
 
@@ -65,7 +66,7 @@ export class ListPage {
   }
 
   addToTotals(type, amount) {
-    this.totals[type] += amount;
+    this.totals[type] += Number(amount);
   }
 
   isJson(str) {

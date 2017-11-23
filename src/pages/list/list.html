@@ -54,11 +54,11 @@
     <ion-item *ngIf="totals.Efectivo > 0">
       <b>Efectivo:</b> {{ totals.Efectivo | currency:'USD':true:'1.2-2' }}
     </ion-item>
-    <ion-item *ngIf="totals['Tarjeta de Débito'] > 0">
-      <b>Tarjeta de Débito:</b> {{ totals['Tarjeta de Débito'] | currency:'USD':true:'1.2-2' }}
+    <ion-item *ngIf="totals['Tarjeta de Debito'] > 0">
+      <b>Tarjeta de Débito:</b> {{ totals['Tarjeta de Debito'] | currency:'USD':true:'1.2-2' }}
     </ion-item>
-    <ion-item *ngIf="totals['Tarjeta de Crédito'] > 0">
-      <b>Tarjeta de Crédito:</b> {{ totals['Tarjeta de Crédito'] | currency:'USD':true:'1.2-2' }}
+    <ion-item *ngIf="totals['Tarjeta de Credito'] > 0">
+      <b>Tarjeta de Crédito:</b> {{ totals['Tarjeta de Credito'] | currency:'USD':true:'1.2-2' }}
     </ion-item>
     <ion-item *ngIf="totals.Otro > 0">
       <b>Otro:</b> {{ totals.Otro | currency:'USD':true:'1.2-2' }}
@@ -98,11 +98,11 @@
       <b>Efectivo:</b> {{ totals.Efectivo | number:'1.2-2' }}
       <br>
     </span>
-    <span *ngIf="totals['Tarjeta de Débito'] > 0">
+    <span *ngIf="totals['Tarjeta de Debito'] > 0">
       <b>Tarjeta de Débito:</b> {{ totals['Tarjeta de Debito'] | number:'1.2-2' }}
       <br>
     </span>
-    <span *ngIf="totals['Tarjeta de Crédito'] > 0">
+    <span *ngIf="totals['Tarjeta de Credito'] > 0">
       <b>Tarjeta de Crédito:</b> {{ totals['Tarjeta de Credito'] | number:'1.2-2' }}
       <br>
     </span>
