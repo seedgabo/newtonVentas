@@ -104,19 +104,19 @@ export class HomePage {
       inputs: [{
         type: 'radio',
         label: 'Efectivo',
-        value: 'efectivo',
+        value: 'Efectivo',
         checked: true
       },
       {
         type: 'radio',
         label: 'Tarjeta de Débito',
-        value: 'Tarjeta de Débito',
+        value: 'Tarjeta de Debito',
         checked: false
       },
       {
         type: 'radio',
         label: 'Tarjeta de Crédito',
-        value: 'Tarjeta de Crédito',
+        value: 'Tarjeta de Credito',
         checked: false
       },
       {

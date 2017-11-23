@@ -26,7 +26,7 @@ export class PrintInvoicePage {
     if (navParams.get('receipt')) {
       this.invoice.receipt = navParams.get('receipt');
     }
-    console.log(this.invoice);
+
     moment.locale('es');
   }
 
@@ -71,6 +71,8 @@ export class PrintInvoicePage {
     if (this.isJson(this.invoice.pago)) {
       this.pagos = JSON.parse(this.invoice.pago);
     }
+    console.log(this.invoice);
+    console.log(this.pagos);
   }
 
   isJson(str) {

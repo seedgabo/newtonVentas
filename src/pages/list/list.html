@@ -15,7 +15,6 @@
     </ion-buttons>
   </ion-navbar>
   <ion-toolbar [ngClass]="{'no-print': api.settings_invoices.tipo_impresion == 'pos'}">
-
     <small *ngIf="first_date">
       Desde el: {{first_date | amDateFormat:'DD MMMM YYYY' }}
       <span style="float:right">
@@ -30,7 +29,7 @@
     <ion-spinner color="primary" *ngIf="loading"></ion-spinner>
   </div>
   <ion-list [ngClass]="{'no-print': api.settings_invoices.tipo_impresion == 'pos'}" id="toPrint" [virtualScroll]="invoices">
-    <button ion-item *virtualItem="let invoice" (click)="actions(invoice)" text-wrap>
+    <button approxItemHeight="50px" ion-item *virtualItem="let invoice" (click)="actions(invoice)" text-wrap>
       <span item-left>
         {{invoice.numero}}
       </span>
@@ -44,9 +43,26 @@
         {{invoice.cliente.nit}}
       </p>
       <span item-right>
-        {{ invoice.total | currency:'USD':true:'4.2-2' }}
+        {{ invoice.total | currency:'USD':true:'1.2-2' }}
       </span>
     </button>
+  </ion-list>
+  <ion-list [ngClass]="{'no-print': api.settings_invoices.tipo_impresion == 'pos'}">
+    <ion-item-divider color="light">
+      Totales:
+    </ion-item-divider>
+    <ion-item *ngIf="totals.Efectivo > 0">
+      <b>Efectivo:</b> {{ totals.Efectivo | currency:'USD':true:'1.2-2' }}
+    </ion-item>
+    <ion-item *ngIf="totals['Tarjeta de Débito'] > 0">
+      <b>Tarjeta de Débito:</b> {{ totals['Tarjeta de Débito'] | currency:'USD':true:'1.2-2' }}
+    </ion-item>
+    <ion-item *ngIf="totals['Tarjeta de Crédito'] > 0">
+      <b>Tarjeta de Crédito:</b> {{ totals['Tarjeta de Crédito'] | currency:'USD':true:'1.2-2' }}
+    </ion-item>
+    <ion-item *ngIf="totals.Otro > 0">
+      <b>Otro:</b> {{ totals.Otro | currency:'USD':true:'1.2-2' }}
+    </ion-item>
   </ion-list>
 
   <div *ngIf="printing && api.settings_invoices.tipo_impresion == 'pos'" class="printable punto" id="toPrintMini" no-margin>
@@ -61,7 +77,7 @@
       </thead>
       <tbody *ngFor="let invoice of invoices">
         <tr>
-          <td>{{ invoice.number ? invoice.number : ''}}</td>
+          <td>{{ invoice.numero}}</td>
           <td style="width:50pt">{{ invoice.cliente ? invoice.cliente.full_name : 'N/A' }}</td>
           <td>{{ invoice.created_at | amDateFormat:"D/MM/YY H:mm a" }} </td>
           <td>{{ invoice.total | number:'1.2-2' }}</td>
@@ -76,6 +92,23 @@
         </tr>
       </tfoot>
     </table>
+    <div class="separator"></div>
+    <br> Totales:
+    <span *ngIf="totals.Efectivo > 0">
+      <b>Efectivo:</b> {{ totals.Efectivo | number:'1.2-2' }}
+      <br>
+    </span>
+    <span *ngIf="totals['Tarjeta de Débito'] > 0">
+      <b>Tarjeta de Débito:</b> {{ totals['Tarjeta de Debito'] | number:'1.2-2' }}
+      <br>
+    </span>
+    <span *ngIf="totals['Tarjeta de Crédito'] > 0">
+      <b>Tarjeta de Crédito:</b> {{ totals['Tarjeta de Credito'] | number:'1.2-2' }}
+      <br>
+    </span>
+    <span *ngIf="totals.Otro > 0">
+      <b>Otro:</b> {{ totals.Otro | number:'1.2-2' }}
+    </span>
   </div>
 </ion-content>
 

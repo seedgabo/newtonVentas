@@ -19,6 +19,12 @@ export class ListPage {
   from
   to
   printing = false;
+  totals = {
+    "Efectivo": 0,
+    "Tarjeta de Debito": 0,
+    "Tarjeta de Credito": 0,
+    "Otro": 0,
+  }
   constructor(public navCtrl: NavController, public navParams: NavParams, public actionsheet: ActionSheetController, public platform: Platform, public printer: Printer, public popover: PopoverController, public api: Api) {
   }
 
@@ -34,15 +40,41 @@ export class ListPage {
 
   calculate() {
     var total = 0;
+    this.totals = {
+      "Efectivo": 0,
+      "Tarjeta de Debito": 0,
+      "Tarjeta de Credito": 0,
+      "Otro": 0,
+    }
     if (this.invoices.length > 0) {
       this.first_date = moment(this.invoices[0].created_at)
       this.last_date = moment(this.invoices[this.invoices.length - 1].created_at)
     }
     this.invoices.forEach((inv) => {
       total += inv.total;
+      if (this.isJson(inv.pago)) {
+        JSON.parse(inv.pago).forEach(element => {
+          this.addToTotals(element.metodo, element.monto)
+        });
+      } else {
+        this.addToTotals(inv.pago, inv.total);
+      }
     })
     this.total = total;
     this.loading = false;
+  }
+
+  addToTotals(type, amount) {
+    this.totals[type] += amount;
+  }
+
+  isJson(str) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
   }
 
   actions(invoice) {
@@ -145,7 +177,6 @@ export class ListPage {
   clearByDate() {
     this.ionViewDidLoad()
   }
-
 
   more(ev) {
     let popover = this.popover.create("PopoverListPage", {
