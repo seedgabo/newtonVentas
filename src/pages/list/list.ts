@@ -115,11 +115,11 @@ export class ListPage {
       })
   }
 
-  print() {
+  print(clear = true) {
     setTimeout(() => {
       this.printing = true;
       if (!this.platform.is('mobile')) {
-        return this.toPrintCallback();
+        return this.toPrintCallback(clear);
       };
       var promise;
       if (this.api.settings_invoices.tipo_impresion == "pos") {
@@ -129,21 +129,22 @@ export class ListPage {
         promise = this.printer.print(document.getElementById('toPrint'), { name: 'invoice' })
       }
       promise.then(() => {
-        this.complete();
+        if (clear) this.complete();
         this.printing = false;
       })
         .catch((err) => {
-          this.toPrintCallback();
+          this.toPrintCallback(clear);
           console.error(err);
         });
 
     }, 1000);
   }
 
-  toPrintCallback() {
+  toPrintCallback(clear = true) {
     setTimeout(() => {
       window.print();
-      this.complete();
+      if (clear)
+        this.complete();
       setTimeout(() => {
         this.printing = false;
       }, 100);

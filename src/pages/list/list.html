@@ -5,7 +5,7 @@
     </button>
     <ion-title>Facturas </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="print()" *ngIf="from" class="no-print">
+      <button ion-button icon-only (click)="print(false)" class="no-print">
         <ion-icon name="print"></ion-icon>
       </button>
 
@@ -66,21 +66,21 @@
   </ion-list>
 
   <div *ngIf="printing && api.settings_invoices.tipo_impresion == 'pos'" class="printable punto" id="toPrintMini" no-margin>
-    <table class="pos-items" style="width:100%;text-align:center;margin-right:5pt" no-margin>
+    <table style="width:100%;text-align:center;margin-right:5pt" no-margin>
       <thead>
         <tr>
-          <th>#</th>
-          <th>Cliente</th>
-          <th>Fecha</th>
-          <th>Total</th>
+          <th class="pos-items">#</th>
+          <th class="pos-items">Cliente</th>
+          <th class="pos-items">Fecha</th>
+          <th class="pos-items">Total</th>
         </tr>
       </thead>
       <tbody *ngFor="let invoice of invoices">
         <tr>
-          <td>{{ invoice.numero}}</td>
-          <td style="width:50pt">{{ invoice.cliente ? invoice.cliente.full_name : 'N/A' }}</td>
-          <td>{{ invoice.created_at | amDateFormat:"D/MM/YY H:mm a" }} </td>
-          <td>{{ invoice.total | number:'1.2-2' }}</td>
+          <td class="pos-items">{{ invoice.numero}}</td>
+          <td class="pos-items" style="width:50pt">{{ invoice.cliente ? invoice.cliente.full_name : 'N/A' }}</td>
+          <td class="pos-items">{{ invoice.created_at | amDateFormat:"D/MM/YY H:mm a" }} </td>
+          <td class="pos-items">{{ invoice.total | number:'1.1-1' }}</td>
         </tr>
       </tbody>
       <tfoot>
