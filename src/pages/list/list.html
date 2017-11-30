@@ -43,7 +43,7 @@
         {{invoice.cliente.nit}}
       </p>
       <span item-right>
-        {{ invoice.total | currency:'USD':true:'1.2-2' }}
+        {{ invoice.total| floor | currency:'USD':true:'1.2-2' }}
       </span>
     </button>
   </ion-list>
@@ -52,16 +52,16 @@
       Totales:
     </ion-item-divider>
     <ion-item *ngIf="totals.Efectivo > 0">
-      <b>Efectivo:</b> {{ totals.Efectivo | currency:'USD':true:'1.2-2' }}
+      <b>Efectivo:</b> {{ totals.Efectivo | floor | currency:'USD':true:'1.2-2' }}
     </ion-item>
     <ion-item *ngIf="totals['Tarjeta de Debito'] > 0">
-      <b>Tarjeta de Débito:</b> {{ totals['Tarjeta de Debito'] | currency:'USD':true:'1.2-2' }}
+      <b>Tarjeta de Débito:</b> {{ totals['Tarjeta de Debito'] | floor | currency:'USD':true:'1.2-2' }}
     </ion-item>
     <ion-item *ngIf="totals['Tarjeta de Credito'] > 0">
-      <b>Tarjeta de Crédito:</b> {{ totals['Tarjeta de Credito'] | currency:'USD':true:'1.2-2' }}
+      <b>Tarjeta de Crédito:</b> {{ totals['Tarjeta de Credito'] | floor | currency:'USD':true:'1.2-2' }}
     </ion-item>
     <ion-item *ngIf="totals.Otro > 0">
-      <b>Otro:</b> {{ totals.Otro | currency:'USD':true:'1.2-2' }}
+      <b>Otro:</b> {{ totals.Otro | floor | currency:'USD':true:'1.2-2' }}
     </ion-item>
   </ion-list>
 
@@ -118,7 +118,7 @@
       <ion-row>
         <ion-col>
           <b>Total:</b>
-          <span>{{ total | currency:'USD':true:'1.2-2' }}</span>
+          <span>{{ total | floor | currency:'USD':true:'1.2-2' }}</span>
         </ion-col>
         <ion-col class="no-print">
           <button [disabled]="loading" *ngIf="!from" ion-button full color="secondary" (click)="print()">Cierre</button>

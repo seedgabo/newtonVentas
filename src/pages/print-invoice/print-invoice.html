@@ -50,7 +50,7 @@
                   <div *ngIf="pagos">
                     {{'Pagos'}}:
                     <span *ngFor="let pag of pagos">
-                      <br> {{ pag.metodo }}: {{pag.monto | currency:'USD':true:'1.2-2'}}
+                      <br> {{ pag.metodo }}: {{pag.monto | floor | currency:'USD':true:'1.2-2'}}
                     </span>
                   </div>
                 </td>
@@ -104,18 +104,18 @@
           </td>
 
           <td style="padding: 5px;vertical-align: top;text-align: center;border-bottom: none;">
-            {{ item.precio | currency:'USD':true:'1.2-2' }}
+            {{ item.precio | floor | currency:'USD':true:'1.2-2' }}
           </td>
           <td style="padding: 5px;vertical-align: top;text-align: center;border-bottom: none;">
             {{ item.impuesto }} %
           </td>
 
           <td style="padding: 5px;vertical-align: top;text-align: center;border-bottom: none;">
-            {{ item.descuento | currency:'USD':true:'1.2-2' }}
+            {{ item.descuento | floor | currency:'USD':true:'1.2-2' }}
           </td>
 
           <td style="padding: 5px;vertical-align: top;text-align: center;border-bottom: none;">
-            {{(item.total) | currency:'USD':true:'1.2-2' }}
+            {{(item.total) | floor | currency:'USD':true:'1.2-2' }}
           </td>
         </tr>
 
@@ -129,7 +129,7 @@
             Total:
           </td>
           <td style="padding: 5px;vertical-align: top; text-align: center;border-top: 2px solid #eee;font-weight: bold;">
-            {{ invoice.total | currency:'USD':true:'1.2-2' }}
+            {{ invoice.total | floor | currency:'USD':true:'1.2-2' }}
           </td>
         </tr>
 
