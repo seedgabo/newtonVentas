@@ -27,12 +27,17 @@
 
     <ion-item>
       <ion-label floating>Precio</ion-label>
-      <ion-input type="number" [(ngModel)]="producto.precio"></ion-input>
+      <ion-input type="number" [(ngModel)]="producto.precio" (ionBlur)="calculate('precio',producto.precio)"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label floating>Impuesto</ion-label>
-      <ion-input type="number" [(ngModel)]="producto.impuesto"></ion-input>
+      <ion-input type="number" [(ngModel)]="producto.impuesto" (ionBlur)="calculate('precio',producto.impuesto)"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="ready">
+      <ion-label floating>Total</ion-label>
+      <ion-input type="number" [(ngModel)]="total" (ionBlur)="calculate('total', total)"></ion-input>
     </ion-item>
 
     <ion-item>

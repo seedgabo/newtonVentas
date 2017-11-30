@@ -21,14 +21,30 @@ export class ProductoPage {
     "mostrar_precio": 1,
     "entidad_id": this.api.user.entidad_id,
   };
+  total = 0;
   loading = false;
+  ready = true;
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public viewctrl: ViewController) {
     if (navParams.get('producto')) {
       this.producto = navParams.get('producto');
     }
+    this.calculate("precio", this.producto.precio);
+    this.ready = true;
   }
 
   ionViewDidLoad() {
+  }
+
+  calculate(type = "precio", value) {
+    if (type == 'precio') {
+      this.total = value * (1 + this.producto.impuesto / 100)
+    }
+    if (type == 'impuesto') {
+      this.total = this.producto.precio * (1 + value / 100)
+    }
+    if (type == 'total') {
+      this.producto.precio = value / (1 + this.producto.impuesto / 100);
+    }
   }
 
   save() {
