@@ -204,7 +204,6 @@ export class HomePage {
               this.cliente = null;
               this.propina = null
               this.descuento = 0;
-              this.toast.create({ message: "Pedido Procesado", duration: 3000 }).present();
             });
           })
           .catch((err) => {
