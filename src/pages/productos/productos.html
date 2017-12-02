@@ -1,12 +1,10 @@
 <ion-header>
-
   <ion-navbar color="primary">
     <button ion-button menuToggle icon-only>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Productos</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
@@ -23,7 +21,7 @@
         <img [src]="producto.image_url" alt="">
       </ion-thumbnail>
       <h2>{{ producto.name }}</h2>
-      <h3>{{producto.precio | currency:'USD':true:'4.2-2' }}</h3>
+      <h3>{{producto.valor | currency:'USD':true:'1.2-2' }}</h3>
       <small>{{producto.referencia}}</small>
     </button>
   </ion-list>

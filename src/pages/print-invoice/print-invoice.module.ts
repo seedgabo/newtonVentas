@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { PrintInvoicePage } from './print-invoice';
 import { MomentModule } from 'angular2-moment';
-
+import { NgMathPipesModule } from 'angular-pipes';
 @NgModule({
   declarations: [
     PrintInvoicePage,
@@ -11,6 +11,7 @@ import { MomentModule } from 'angular2-moment';
   imports: [
     MomentModule,
     IonicPageModule.forChild(PrintInvoicePage),
+    NgMathPipesModule,
     // PipesModule
   ],
 })

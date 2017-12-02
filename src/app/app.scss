@@ -13,7 +13,17 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 @media print {
-  .no-print {
+  .no-print,
+  .back-button {
+    display: none !important;
+  }
+  .no-printable {
+    display: none !important;
+  }
+  .print-only {
+    display: block;
+  }
+   ::-webkit-scrollbar {
     display: none;
   }
 }

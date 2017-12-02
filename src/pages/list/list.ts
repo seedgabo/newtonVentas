@@ -19,6 +19,12 @@ export class ListPage {
   from
   to
   printing = false;
+  totals = {
+    "Efectivo": 0,
+    "Tarjeta de Debito": 0,
+    "Tarjeta de Credito": 0,
+    "Otro": 0,
+  }
   constructor(public navCtrl: NavController, public navParams: NavParams, public actionsheet: ActionSheetController, public platform: Platform, public printer: Printer, public popover: PopoverController, public api: Api) {
   }
 
@@ -29,20 +35,47 @@ export class ListPage {
       this.to = null;
       this.invoices = this.api.invoices;
       this.calculate();
+      console.log(this.totals);
     })
   }
 
   calculate() {
     var total = 0;
+    this.totals = {
+      "Efectivo": 0,
+      "Tarjeta de Debito": 0,
+      "Tarjeta de Credito": 0,
+      "Otro": 0,
+    }
     if (this.invoices.length > 0) {
       this.first_date = moment(this.invoices[0].created_at)
       this.last_date = moment(this.invoices[this.invoices.length - 1].created_at)
     }
     this.invoices.forEach((inv) => {
       total += inv.total;
+      if (this.isJson(inv.pago)) {
+        JSON.parse(inv.pago).forEach(element => {
+          this.addToTotals(element.metodo, element.monto)
+        });
+      } else {
+        this.addToTotals(inv.pago, inv.total);
+      }
     })
     this.total = total;
     this.loading = false;
+  }
+
+  addToTotals(type, amount) {
+    this.totals[type] += Number(amount);
+  }
+
+  isJson(str) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
   }
 
   actions(invoice) {
@@ -82,11 +115,11 @@ export class ListPage {
       })
   }
 
-  print() {
+  print(clear = true) {
     setTimeout(() => {
       this.printing = true;
       if (!this.platform.is('mobile')) {
-        return this.toPrintCallback();
+        return this.toPrintCallback(clear);
       };
       var promise;
       if (this.api.settings_invoices.tipo_impresion == "pos") {
@@ -96,21 +129,22 @@ export class ListPage {
         promise = this.printer.print(document.getElementById('toPrint'), { name: 'invoice' })
       }
       promise.then(() => {
-        this.complete();
+        if (clear) this.complete();
         this.printing = false;
       })
         .catch((err) => {
-          this.toPrintCallback();
+          this.toPrintCallback(clear);
           console.error(err);
         });
 
     }, 1000);
   }
 
-  toPrintCallback() {
+  toPrintCallback(clear = true) {
     setTimeout(() => {
       window.print();
-      this.complete();
+      if (clear)
+        this.complete();
       setTimeout(() => {
         this.printing = false;
       }, 100);
@@ -145,7 +179,6 @@ export class ListPage {
   clearByDate() {
     this.ionViewDidLoad()
   }
-
 
   more(ev) {
     let popover = this.popover.create("PopoverListPage", {

@@ -4,7 +4,6 @@ import { ProductSearchPage } from './../product-search/product-search';
 import { Component } from '@angular/core';
 import { NavController, ModalController, LoadingController, AlertController, ToastController, IonicPage } from 'ionic-angular';
 import { ActionSheetController } from 'ionic-angular/components/action-sheet/action-sheet-controller';
-import { PopoverController } from 'ionic-angular/components/popover/popover-controller';
 @IonicPage()
 @Component({
   selector: 'page-home',
@@ -104,19 +103,19 @@ export class HomePage {
       inputs: [{
         type: 'radio',
         label: 'Efectivo',
-        value: 'efectivo',
+        value: 'Efectivo',
         checked: true
       },
       {
         type: 'radio',
         label: 'Tarjeta de Débito',
-        value: 'Tarjeta de Débito',
+        value: 'Tarjeta de Debito',
         checked: false
       },
       {
         type: 'radio',
         label: 'Tarjeta de Crédito',
-        value: 'Tarjeta de Crédito',
+        value: 'Tarjeta de Credito',
         checked: false
       },
       {
