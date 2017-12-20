@@ -121,7 +121,7 @@
           <span>{{ total | floor | currency:'USD':true:'1.2-2' }}</span>
         </ion-col>
         <ion-col class="no-print">
-          <button [disabled]="loading" *ngIf="!from" ion-button full color="secondary" (click)="print()">Cierre</button>
+          <button [disabled]="loading" *ngIf="!from" ion-button full color="secondary" (click)="proccess()">Cierre</button>
           <button *ngIf="from" ion-button full clear (click)="clearByDate()">Volver</button>
         </ion-col>
       </ion-row>

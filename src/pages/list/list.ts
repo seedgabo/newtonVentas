@@ -25,6 +25,7 @@ export class ListPage {
     "Tarjeta de Credito": 0,
     "Otro": 0,
   }
+  cash_desk = null
   constructor(public navCtrl: NavController, public navParams: NavParams, public actionsheet: ActionSheetController, public platform: Platform, public printer: Printer, public popover: PopoverController, public api: Api) {
   }
 
@@ -115,6 +116,25 @@ export class ListPage {
       })
   }
 
+  proccess() {
+    var data = {
+      user_id: this.api.user.id,
+      from: this.from.format('Y-M-D H:mm:ss'),
+      to: this.to.format('Y-M-D H:mm:ss'),
+      invoices: []
+    }
+    this.invoices.forEach((inv) => {
+      data.invoices.push(inv.id)
+    })
+    this.api.post('cash_desks', data).then((resp) => {
+      this.cash_desk = resp;
+      setTimeout(() => {
+        this.print(true);
+      }, 300)
+    })
+      .catch((err) => { console.error(err) })
+  }
+
   print(clear = true) {
     setTimeout(() => {
       this.printing = true;
@@ -156,6 +176,7 @@ export class ListPage {
   }
 
   clear() {
+    this.cash_desk = null
     this.api.invoices = [];
     this.invoices = [];
     this.api.storage.set('invoices', []);
