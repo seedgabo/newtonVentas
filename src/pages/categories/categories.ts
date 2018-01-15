@@ -9,7 +9,7 @@ import { IonicPage, NavController, NavParams, ModalController,ActionSheetControl
 export class CategoriesPage {
   loading = false;
   query =""
-  categorias =[]
+  categorias = []
   constructor(public navCtrl: NavController, public navParams: NavParams,public modal:ModalController, public actionsheet:ActionSheetController, public api:Api) {
   }
 

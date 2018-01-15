@@ -1,0 +1,46 @@
+<ion-header>
+
+  <ion-navbar color="secondary">
+    <ion-title>Categoria</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+
+    <ion-item>
+      <ion-label floating>Nombre</ion-label>
+      <ion-input [(ngModel)]="categoria.name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Descripción</ion-label>
+      <ion-textarea [(ngModel)]="categoria.description"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Categoria Padre</ion-label>
+      <ion-select [(ngModel)]="categoria.parent_id">
+        <ion-option [value]="cat.id"  *ngFor="let cat of categories" [disabled]="cat.id == categoria.id">
+            {{cat.name}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <button ion-button [disabled]="!canSave() || loading " full color="secondary" (click)="save()">
+    Guardar
+  </button>
+</ion-footer>
