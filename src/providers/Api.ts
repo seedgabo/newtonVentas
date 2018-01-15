@@ -28,6 +28,7 @@ export class Api {
   resolve;
   invoices = [];
   productos = [];
+  categorias = [];
   constructor(public http: Http, public storage: Storage, public alert: AlertController) {
     this.initVar();
   }
