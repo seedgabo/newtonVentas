@@ -26,7 +26,7 @@ export class MyApp {
     this.pages = [
       { title: 'Punto de Venta', component: 'HomePage', icon: 'home' },
       { title: 'Facturas', component: 'ListPage', icon: 'list' },
-      { title: 'Productos', component: 'ProductosPage', icon: 'cart' },
+      { title: 'Productos', component: 'ProductTabsPage', icon: 'cart' },
       { title: 'Configuración', component: 'SettingsPage', icon: 'settings' },
     ];
     this.api.ready.then((data) => {

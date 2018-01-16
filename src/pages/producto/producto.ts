@@ -19,17 +19,37 @@ export class ProductoPage {
     "es_vendible_sin_stock": 1,
     "mostrar_stock": 0,
     "mostrar_precio": 1,
+    "categoria_id": null,
     "entidad_id": this.api.user.entidad_id,
   };
   total = 0;
   loading = false;
   ready = true;
+  categories = []
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: Api, public viewctrl: ViewController) {
     if (navParams.get('producto')) {
       this.producto = navParams.get('producto');
     }
+    if (this.navParams.get('categories')) {
+      this.categories = this.navParams.get('categories')
+    }
+    else {
+      if(this.api.categorias.length > 0){
+        this.categories = this.api.categorias
+      }else{
+        this.api.get('categorias-productos?where[entidad_id]=' + this.api.user.entidad_id)
+          .then((data: any) => {
+            this.api.categorias = data;
+            this.categories = this.api.categorias
+          })
+          .catch((err) => {
+            console.error(err)
+          })
+      }
+    }
     this.calculate("precio", this.producto.precio);
     this.ready = true;
+
   }
 
   ionViewDidLoad() {
@@ -61,6 +81,7 @@ export class ProductoPage {
       "mostrar_stock": this.producto.mostrar_precio,
       "mostrar_precio": this.producto.mostrar_precio,
       "entidad_id": this.api.user.entidad_id,
+      "categoria_id": this.producto.categoria_id,
     }
     this.loading = true;
     var promise: Promise<any>;

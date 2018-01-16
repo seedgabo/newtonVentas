@@ -17,19 +17,19 @@
 
     <ion-item>
       <ion-label floating>Nombre</ion-label>
-      <ion-input [(ngModel)]="categoria.name"></ion-input>
+      <ion-input [(ngModel)]="categoria.nombre"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label floating>Descripción</ion-label>
-      <ion-textarea [(ngModel)]="categoria.description"></ion-textarea>
+      <ion-textarea [(ngModel)]="categoria['descripción']"></ion-textarea>
     </ion-item>
 
     <ion-item>
       <ion-label floating>Categoria Padre</ion-label>
       <ion-select [(ngModel)]="categoria.parent_id">
         <ion-option [value]="cat.id"  *ngFor="let cat of categories" [disabled]="cat.id == categoria.id">
-            {{cat.name}}
+            {{ cat.nombre }}
         </ion-option>
       </ion-select>
     </ion-item>

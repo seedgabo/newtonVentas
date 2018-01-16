@@ -20,7 +20,7 @@ export class CategoriesPage {
 
   loadItems() {
     this.loading = true;
-    this.api.get('categorias?where[entidad_id]=' + this.api.user.entidad_id)
+    this.api.get('categorias-productos?where[entidad_id]=' + this.api.user.entidad_id)
       .then((data: any) => {
         console.log(data)
         this.api.categorias = data;
@@ -53,13 +53,7 @@ export class CategoriesPage {
         handler: () => {
           this.edit(Categoria)
         }
-      }, {
-        text: "Editar Imagen",
-        icon: "camera",
-        handler: () => {
-          this.askFile(Categoria)
-        }
-      }, {
+      },  {
         text: "Eliminar",
         icon: "trash",
         handler: () => {
@@ -70,7 +64,7 @@ export class CategoriesPage {
   }
 
   edit(Categoria) {
-    var modal = this.modal.create("CategoriaPage", { Categoria: Categoria })
+    var modal = this.modal.create("CategoriaPage", { categoria: Categoria })
     modal.present();
     modal.onDidDismiss((data) => {
       if (data) {

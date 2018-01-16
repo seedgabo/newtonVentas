@@ -9,8 +9,8 @@ import { Api } from '../../providers/Api';
 export class CategoriaPage {
   categoria = {
       id: null,
-      name: "",
-      description: "",
+      nombre: "",
+      descripción: "",
       parent_id: null
 
   }
@@ -24,22 +24,25 @@ export class CategoriaPage {
      if(this.navParams.get('categories')){
        this.categories =  this.navParams.get('categories')
      }
+     else{
+       this.categories = this.api.categorias
+     }
   }
 
 
   save() {
     var data = {
-      "name": this.categoria.name,
-      "description": this.categoria.description,
+      "nombre": this.categoria.nombre,
+      "descripción": this.categoria.descripción,
       "entidad_id": this.api.user.entidad_id,
     }
     this.loading = true;
     var promise: Promise<any>;
     if (this.categoria.id) {
-      promise = this.api.put('categorias/' + this.categoria.id, data);
+      promise = this.api.put('categorias-productos/' + this.categoria.id, data);
     } else {
 
-      promise = this.api.post('categorias', data);
+      promise = this.api.post('categorias-productos', data);
     }
 
     promise
@@ -54,7 +57,7 @@ export class CategoriaPage {
   }
 
   canSave() {
-    return this.categoria.name.length > 2;
+    return this.categoria.nombre.length > 2;
   }
 
   dismiss() {

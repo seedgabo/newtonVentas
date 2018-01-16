@@ -45,6 +45,15 @@
       <ion-label floating>Descripción</ion-label>
       <ion-textarea [(ngModel)]="producto.description"></ion-textarea>
     </ion-item>
+
+    <ion-item>
+      <ion-label floating>Categoria Padre</ion-label>
+      <ion-select [(ngModel)]="producto.categoria_id">
+        <ion-option [value]="cat.id" *ngFor="let cat of categories">
+          {{ cat.nombre }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
   </ion-list>
 
 </ion-content>

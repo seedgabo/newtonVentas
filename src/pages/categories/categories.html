@@ -16,8 +16,8 @@
   </ion-searchbar>
   <ion-list>
     <button ion-item *ngFor="let cat of categorias; let i=index" (click)="actions(cat,i)">
-      <h2>{{ cat.name }}</h2>
-      <small>{{cat.description}}</small>
+      <h2>{{ cat.nombre }}</h2>
+      <small>{{ cat['descripción'] }}</small>
     </button>
   </ion-list>
   <ion-fab bottom right>

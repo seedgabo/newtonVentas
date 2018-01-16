@@ -22,7 +22,7 @@ export class ProductosPage {
 
   loadItems() {
     this.loading = true;
-    this.api.get('productos?where[entidad_id]=' + this.api.user.entidad_id)
+    this.api.get('productos?with[]=categoria&where[entidad_id]=' + this.api.user.entidad_id)
       .then((data: any) => {
         console.log(data)
         this.api.productos = data;
