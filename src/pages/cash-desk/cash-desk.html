@@ -1,0 +1,135 @@
+<ion-header class="no-printable">
+  <ion-navbar class="no-printable">
+    <ion-title>Cierre de Caja</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-start clear (click)="print()">
+        <ion-icon name="print"></ion-icon>
+        Imprimir
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content [ngClass]="{'punto': api.settings_invoices.tipo_impresion == 'pos'}">
+  <div text-center *ngIf="loading">
+    <ion-spinner color="primary"></ion-spinner>
+  </div>
+  <!-- Header -->
+  <ion-card color="light">
+    <ion-grid>
+      <ion-row wrap>
+        <ion-col col-6 col-sm>
+          <b> Vendedor </b>
+          <span> {{ user.full_name_cedula }} </span>
+          <br>
+          <br> Desde: {{from | amDateFormat:'llll' }}
+          <br> Hasta: {{to | amDateFormat:'llll' }}
+        </ion-col>
+        <ion-col col-6 col-sm class="print-only" text-right>
+          <div style="clear:both">
+            <h1 *ngIf="cash_desk">
+              Cierre de Caja # {{cash_desk.id}}
+            </h1>
+          </div>
+          <div style="float:right">
+            <img *ngIf="!api.settings_invoices.imagen" [src]="api.url + 'img/logo.png'" style="max-height:100px; max-width:100px;">
+            <img *ngIf="api.settings_invoices.imagen" [src]="api.settings_invoices.imagen" style="max-height:100px; max-width:100px;">
+          </div>
+          <div style="clear:both">
+            {{api.settings_invoices.nombre? api.settings_invoices.nombre : api.settings.nombre_empresa}}
+            <br> {{ api.settings_invoices.nit ? api.settings_invoices.nit : api.settings.nit}}
+            <br> {{api.settings_invoices.resolucion? api.settings_invoices.resolucion : api.settings.resolucion_dian}}
+            <br>  {{api.settings_invoices.cabecera ? api.settings_invoices.cabecera: api.settings.cabecera_factura}}
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+
+  
+  <!-- Product List -->
+  <ion-list *ngIf="show_products">
+    <ion-item *ngFor="let item of keys(products)">
+      <h2>{{ item.key }}</h2>
+      <h3>{{item.value.amount | number:'1.0-0' }}</h3>
+      <span item-right text-right>
+        {{item.value.quantity}}
+        <h4 text-center>{{ (item.value.quantity * item.value.amount) | currency:'COP':'symbol-narrow':'1.0-0' }}</h4>
+      </span>
+    </ion-item>
+  </ion-list>
+
+
+  <!-- Categories List -->
+  <ion-card color="light" *ngIf="!loading && show_categories">
+
+    <ion-card-header>Categorias</ion-card-header>
+    <ion-list>
+      <div *ngFor="let cat of keys(categories)">
+        <ion-item *ngIf="cat.value.total > 0">
+          <h2>{{ cat.value._category.name }}</h2>
+          <h3>
+            {{ cat.value.quantity }} Productos
+          </h3>
+          <span item-right text-right>
+            <h4 text-center>{{ (cat.value.total) | currency:'COP':'symbol-narrow':'1.0-0' }}</h4>
+          </span>
+        </ion-item>
+      </div>
+    </ion-list>
+  </ion-card>
+
+
+  <!-- Payment Resume -->
+  <ion-card color="light">
+    <ion-card-header>Pagos</ion-card-header>
+    <ion-list>
+      <ion-item *ngFor="let sum of keys(sums)">
+        <b>{{'literals.'+ sum.key }}:</b>
+        <h3>
+          {{ counts[sum.key] }} Facturas
+        </h3>
+        <h3 item-right>{{sum.value | currency:'COP':'symbol-narrow':'1.0-0'}}</h3>
+      </ion-item>
+      <ion-item>
+        <b>Total:</b>
+        <span item-right>{{ total | currency:'COP':'symbol-narrow':'1.0-0' }} </span>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+
+
+  <!-- Total Counts -->
+  <ion-card color="light">
+    <ion-card-header>Facturas</ion-card-header>
+    <ion-list>
+      <ion-item>
+        <b>
+         Cantidad
+        </b>
+        <p item-right>
+          {{ invoices.length }}
+        </p>
+      </ion-item>
+      <ion-item text-wrap>
+        <h3 text-wrap>
+          <span *ngFor="let inv of invoices">{{ inv.numero? inv.numero : inv.invoice_id ? inv.invoice_id : inv.d }},</span>
+        </h3>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+
+  <!-- Signature -->
+  <div class="print-only" text-center>
+    <br>
+    <br>
+    <br>
+    <div class="signature"></div>
+      Firma
+  </div>
+
+</ion-content>

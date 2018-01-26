@@ -1,6 +1,6 @@
 import { Api } from './../../providers/Api';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import * as moment from 'moment'
 moment.locale('es')
 @IonicPage()
@@ -10,7 +10,7 @@ moment.locale('es')
 })
 export class CashDesksPage {
   cashdesks = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams,public api:Api) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public actionsheet:ActionSheetController,public api:Api) {
   }
 
   ionViewDidLoad() {
@@ -27,8 +27,31 @@ export class CashDesksPage {
         console.log(err)
     })
   }
-  actions(cashdesk){
 
+  actions(cashdesk){
+    var sheet = this.actionsheet.create({
+        title: "Acciones",
+        buttons:[
+          {
+            text: "Imprimir",
+            icon: "print",
+            handler: ()=>{
+              this.printCashDesk(cashdesk)
+            }
+          },
+          {
+            text: "Cancelar",
+            icon: "close",
+            role: 'cancel'
+          }
+        ]
+    }).present()
+  }
+
+  printCashDesk(cashdesk){
+    this.navCtrl.push("CashDesk", {
+      cashdesk: cashdesk
+    })
   }
 
 }
