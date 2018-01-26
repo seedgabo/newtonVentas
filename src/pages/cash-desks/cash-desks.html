@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle icon-only>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title> Cierres de Cajas</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-refresher (ionRefresh)="getCashDesks($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-list-header>
+        Cierres de Cajas
+    </ion-list-header>
+    <button ion-item *ngFor="let cd of cashdesks" (click)="actions(cd)">
+      <h2 item-left># {{cd.id}}</h2>
+      <h3>
+        <b>Del </b> {{ cd.from | amDateFormat:'LLLL' }}
+      </h3>
+      <h4>
+        <b>Facturas</b>: {{ cd.invoices?.length }}
+      </h4>
+      <h4 item-right>
+        Total: {{ cd.total | currency:'COP':'symbol-narrow':'4.2-2' }}
+      </h4>
+    </button>
+  </ion-list>
+</ion-content>

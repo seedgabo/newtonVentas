@@ -26,6 +26,7 @@ export class MyApp {
     this.pages = [
       { title: 'Punto de Venta', component: 'HomePage', icon: 'home' },
       { title: 'Facturas', component: 'ListPage', icon: 'list' },
+      { title: 'Cierres', component: 'CashDesksPage', icon: 'copy' },
       { title: 'Productos', component: 'ProductTabsPage', icon: 'cart' },
       { title: 'Configuración', component: 'SettingsPage', icon: 'settings' },
     ];

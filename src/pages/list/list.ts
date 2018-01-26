@@ -27,6 +27,7 @@ export class ListPage {
   }
   cash_desk = null
   constructor(public navCtrl: NavController, public navParams: NavParams, public actionsheet: ActionSheetController, public platform: Platform, public printer: Printer, public popover: PopoverController, public api: Api) {
+
   }
 
   ionViewDidLoad() {
@@ -117,22 +118,28 @@ export class ListPage {
   }
 
   proccess() {
+    this.loading = true
     var data = {
       user_id: this.api.user.id,
-      from: this.from.format('Y-M-D H:mm:ss'),
-      to: this.to.format('Y-M-D H:mm:ss'),
+      from: this.first_date.format('Y-M-D H:mm:ss'),
+      to: this.last_date.format('Y-M-D H:mm:ss'),
       invoices: []
     }
     this.invoices.forEach((inv) => {
-      data.invoices.push(inv.id)
+      data.invoices.push(inv.invoice_id)
     })
     this.api.post('cash_desks', data).then((resp) => {
+      console.log(resp)
       this.cash_desk = resp;
+      this.loading = false
       setTimeout(() => {
         this.print(true);
-      }, 300)
+      }, 120)
     })
-      .catch((err) => { console.error(err) })
+    .catch((err) => { 
+        this.loading = false
+        console.error(err) 
+      })
   }
 
   print(clear = true) {
