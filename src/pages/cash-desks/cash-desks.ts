@@ -49,7 +49,7 @@ export class CashDesksPage {
   }
 
   printCashDesk(cashdesk){
-    this.navCtrl.push("CashDesk", {
+    this.navCtrl.push("CashDeskPage", {
       cashdesk: cashdesk
     })
   }

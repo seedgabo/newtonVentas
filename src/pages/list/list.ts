@@ -143,40 +143,12 @@ export class ListPage {
   }
 
   print(clear = true) {
-    setTimeout(() => {
-      this.printing = true;
-      if (!this.platform.is('mobile')) {
-        return this.toPrintCallback(clear);
-      };
-      var promise;
-      if (this.api.settings_invoices.tipo_impresion == "pos") {
-        promise = this.printer.print(document.getElementById('toPrintMini'), { name: 'invoice' })
-
-      } else {
-        promise = this.printer.print(document.getElementById('toPrint'), { name: 'invoice' })
-      }
-      promise.then(() => {
-        if (clear) this.complete();
-        this.printing = false;
-      })
-        .catch((err) => {
-          this.toPrintCallback(clear);
-          console.error(err);
-        });
-
+    this.navCtrl.push("CashDeskPage", {cashdesk : this.cash_desk})
+    setTimeout(() => {        
+      if (clear) this.complete();
     }, 1000);
   }
 
-  toPrintCallback(clear = true) {
-    setTimeout(() => {
-      window.print();
-      if (clear)
-        this.complete();
-      setTimeout(() => {
-        this.printing = false;
-      }, 100);
-    }, 300);
-  }
 
   complete() {
     this.clear();

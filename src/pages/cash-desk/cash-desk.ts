@@ -21,7 +21,7 @@ export class CashDeskPage {
   }
   sums = {}
   counts = {}
-  printing = true;
+  printing = false;
   from;
   to;
   total = 0;
@@ -66,28 +66,33 @@ export class CashDeskPage {
     if (this.show_categories) {
       this.calculateCategories()
     }
+
+    if(this.printing){
+      this.print()
+    }
   }
 
   calculate() {
     this.products = {}
     this.sums = {}
     this.total = 0
+
     if (this.invoices.length > 0) {
       this.from = moment(this.invoices[0].created_at)
       this.to = moment(this.invoices[this.invoices.length - 1].created_at)
     }
-
     this.invoices.forEach((inv) => {
       if (inv.estado != 'anulado') {
-        inv.items.forEach(item => {
+        var items = typeof inv.items == 'string' ? JSON.parse(inv.items) : items
+        items.forEach(item => {
           if (!this.products[item.name]) {
             this.products[item.name] = {
-              quantity: Number(item.quantity),
-              amount: Number(item.amount),
+              quantity: Number(item.cantidad_pedidos),
+              amount: Number(item.precio),
               _product: item
             };
           } else {
-            this.products[item.name].quantity += Number(item.quantity);
+            this.products[item.name].quantity += Number(item.cantidad_pedidos);
           }
         });
         this.total += Number(inv.total);
@@ -132,21 +137,21 @@ export class CashDeskPage {
   }
 
   print() {
-    window.print()
+    this.printing = true
+    setTimeout(() => {
+        window.print()
+        this.printing = false
+    }, 300);
   }
 
   getPaymentsFromInvoices(invoice) {
-    var payment = invoice.payment
+    var payment = invoice.pago
     if (!payment) {
-      this.addTosums("cash", invoice.total)
+      this.addTosums("Efectivo", invoice.total)
       return;
     }
     if (this.isJson(payment)) {
-      JSON
-        .parse(payment)
-        .forEach(pay => {
-          this.addTosums(pay.method, pay.amount)
-        });
+      JSON .parse(payment) .forEach(pay => { this.addTosums(pay.metodo, pay.monto) });
     } else {
 
       this.addTosums(payment, invoice.total)
