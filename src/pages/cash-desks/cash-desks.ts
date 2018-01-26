@@ -29,7 +29,7 @@ export class CashDesksPage {
   }
 
   actions(cashdesk){
-    var sheet = this.actionsheet.create({
+    this.actionsheet.create({
         title: "Acciones",
         buttons:[
           {
