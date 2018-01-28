@@ -68,6 +68,8 @@
     </ion-item>
   </ion-list>
 
+
+
   <ion-fab bottom right small (click)="selectProduct()">
     <button ion-fab>
       <ion-icon name="add"></ion-icon>
@@ -82,6 +84,12 @@
         <ion-col>
           <b>Total:</b>
           <span>{{ total() | floor | currency:'USD':true:'1.2-2' }}</span>
+        </ion-col>
+        <ion-col *ngIf="descuento > 0">
+          <span ion-text color="danger">
+            <b>Descuento:</b>
+            <span>{{ descuento | floor | currency:'USD':true:'1.2-2' }}</span>
+          </span>
         </ion-col>
         <ion-col>
           <button ion-button block color="secondary" [disabled]="!canProccess()" (click)="askPago()">

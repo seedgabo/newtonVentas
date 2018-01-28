@@ -93,7 +93,7 @@ export class HomePage {
     this.items.forEach((item) => {
       total += item.precio * item.quantity + (item.precio * item.quantity * item.impuesto / 100);
     });
-    return total;
+    return total - this.descuento;
   }
 
   askPago() {
@@ -167,6 +167,7 @@ export class HomePage {
       estado: 'Pagado',
       pago: metodo,
       vendedor_id: this.api.user.id,
+      descuento: this.descuento
     }
     this.items.forEach((item) => {
       data.items.push({
@@ -262,6 +263,12 @@ export class HomePage {
           this.agregarPropina();
         }
       }, {
+        text: 'Registrar Descuento',
+        icon: 'cash',
+        handler: () => {
+          this.agregarDescuento();
+        }
+      }, {
         text: 'Cancelar',
         role: 'cancel',
         icon: 'close',
@@ -296,6 +303,28 @@ export class HomePage {
               impuesto: 0,
               quantity: 1,
             });
+        }
+      }]
+    }).present();
+  }
+
+  agregarDescuento() {
+    this.alert.create({
+      'title': 'Valor del descuento',
+      inputs: [{
+        label: 'Valor del descuento',
+        placeholder: 'Valor',
+        value: "" + 0,
+        type: 'number',
+        name: 'descuento'
+      }],
+      buttons: [{
+        text: 'Cancelar'
+      }, {
+        text: 'Agregar',
+        handler: (data) => {
+          if (data && data.descuento)
+            this.descuento = Number(data.descuento)
         }
       }]
     }).present();

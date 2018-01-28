@@ -119,6 +119,18 @@
           </td>
         </tr>
 
+        <tr class="descuento">
+          <td style="padding: 5px;vertical-align: top;"></td>
+          <td style="padding: 5px;vertical-align: top;"></td>
+          <td style="padding: 5px;vertical-align: top;"></td>
+          <td style="padding: 5px;vertical-align: top;"></td>
+          <td style="padding: 5px;vertical-align: top;text-align: center;border-top: 2px solid #eee;font-weight: bold;">
+            Descuento:
+          </td>
+          <td style="padding: 5px;vertical-align: top; text-align: center;border-top: 2px solid #eee;font-weight: bold;">
+            {{ invoice.descuento | floor | currency:'USD':true:'1.2-2' }}
+          </td>
+        </tr>
         <!-- Total -->
         <tr class="total">
           <td style="padding: 5px;vertical-align: top;"></td>
@@ -127,6 +139,7 @@
           <td style="padding: 5px;vertical-align: top;"></td>
           <td style="padding: 5px;vertical-align: top;text-align: center;border-top: 2px solid #eee;font-weight: bold;">
             Total:
+
           </td>
           <td style="padding: 5px;vertical-align: top; text-align: center;border-top: 2px solid #eee;font-weight: bold;">
             {{ invoice.total | floor | currency:'USD':true:'1.2-2' }}
@@ -225,6 +238,10 @@
     <br>
     <div class="separator"></div>
     <table style="width:100%">
+      <tr>
+        <th> Descuento:</th>
+        <th> {{ invoice.descuento | number: '1.2-2'}} </th>
+      </tr>
       <tr>
         <th> Total:</th>
         <th> {{ invoice.total | number: '1.2-2'}} </th>

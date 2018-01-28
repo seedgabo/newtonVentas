@@ -106,7 +106,7 @@ export class ListPage {
       id = data.id;
     }
 
-    this.api.get('invoices/' + id + "?with[]=cliente&with[]=items&with[]=user")
+    this.api.get('invoices/' + id + "?with[]=cliente&with[]=user")
       .then((resp: any) => {
         console.log("invoice:", resp);
         resp.items = JSON.parse(resp.items);
@@ -136,15 +136,15 @@ export class ListPage {
         this.print(true);
       }, 120)
     })
-    .catch((err) => { 
+      .catch((err) => {
         this.loading = false
-        console.error(err) 
+        console.error(err)
       })
   }
 
   print(clear = true) {
-    this.navCtrl.push("CashDeskPage", {cashdesk : this.cash_desk})
-    setTimeout(() => {        
+    this.navCtrl.push("CashDeskPage", { cashdesk: this.cash_desk })
+    setTimeout(() => {
       if (clear) this.complete();
     }, 1000);
   }
